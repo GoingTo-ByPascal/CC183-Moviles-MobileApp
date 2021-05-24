@@ -10,19 +10,19 @@ class GoingTo extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "GoingTo",
-      home: Inicio(),
+      home: Login(),
     );
   }
 }
 
-class Inicio extends StatefulWidget {
-  Inicio({Key? key}) : super(key: key);
+class Login extends StatefulWidget {
+  Login({Key? key}) : super(key: key);
 
   @override
-  _InicioState createState() => _InicioState();
+  _LoginState createState() => _LoginState();
 }
 
-class _InicioState extends State<Inicio> {
+class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: loginView(context));
