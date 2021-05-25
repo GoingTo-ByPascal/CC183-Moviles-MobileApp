@@ -1,3 +1,4 @@
+import 'package:goingto_app/models/accounts/user.dart';
 import 'package:goingto_app/models/geographic/country.dart';
 
 class UserProfile {
