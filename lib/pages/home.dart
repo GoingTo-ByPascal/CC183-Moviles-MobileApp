@@ -43,33 +43,33 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.local_airport),
+            icon: Icon(Icons.flight_outlined),
             label: 'Explore',
-            backgroundColor: Color(0xff2365FF),
+            backgroundColor: Color(0xff3490de),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.star),
+            icon: Icon(Icons.favorite_border_outlined),
             label: 'Favourites',
-            backgroundColor: Color(0xff2365FF),
+            backgroundColor: Color(0xff3490de),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: 'Search',
-            backgroundColor: Color(0xff2365FF),
+            backgroundColor: Color(0xff3490de),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.check_box),
+            icon: Icon(Icons.emoji_events_outlined),
             label: 'Achievements',
-            backgroundColor: Color(0xff2365FF),
+            backgroundColor: Color(0xff3490de),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
+            icon: Icon(Icons.account_circle_outlined),
             label: 'Settings',
-            backgroundColor: Color(0xff2365FF),
+            backgroundColor: Color(0xff3490de),
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.white70,
         unselectedItemColor: Colors.black,
         onTap: _onItemTapped,
       ),
