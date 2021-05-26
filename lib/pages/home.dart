@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:goingto_app/pages/explore.dart';
+import 'package:goingto_app/pages/search.dart';
+import 'package:goingto_app/pages/achievements.dart';
+import 'package:goingto_app/pages/favourites.dart';
+import 'package:goingto_app/pages/profile.dart';
 
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
@@ -8,31 +13,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Explore',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Favourites',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Search',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Achievements',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 4: Settings',
-      style: optionStyle,
-    ),
-  ];
+  int _selectedIndex = 2;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -40,12 +21,25 @@ class _HomeState extends State<Home> {
     });
   }
 
+  navigate() {
+    switch (_selectedIndex) {
+      case 0:
+        return Explore();
+      case 1:
+        return Favourites();
+      case 2:
+        return Search();
+      case 3:
+        return Achievements();
+      case 4:
+        return Profile();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
+      body: navigate(),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
