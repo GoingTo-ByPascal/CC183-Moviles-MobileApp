@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:goingto_app/pages/home.dart';
 import 'package:goingto_app/pages/register.dart';
