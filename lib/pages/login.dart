@@ -11,54 +11,63 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: loginView());
+    return Scaffold(body: _loginView());
   }
 
-  Widget loginView() {
+  Widget _loginView() {
     return Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: NetworkImage(
-                    "https://i.pinimg.com/originals/88/58/03/8858035f8643b1f2d213ac3b2fd522ae.png"),
-                fit: BoxFit.cover)),
-        child: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            loginTitle(),
-            userField(),
-            passwordField(),
-            SizedBox(
-              height: 10.0,
+      color: Color(0xff3490de),
+      child: Column(
+        children: [
+          Center(
+            child: Container(
+                height: 250.0,
+                child: Image(image: AssetImage('assets/logotrans.png'))),
+          ),
+          Center(
+            child: Container(
+              height: 700.0,
+              width: 500.0,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _userField(),
+                  _passwordField(),
+                  _separator(),
+                  _fbButton(),
+                  _googleButton(),
+                  _loginButton(),
+                ],
+              ),
             ),
-            loginButton()
-          ],
-        )));
-  }
-
-  Widget loginTitle() {
-    return Text(
-      "Inicia Sesión",
-      style: TextStyle(
-        color: Colors.black,
-        fontSize: 35.0,
-        fontWeight: FontWeight.bold,
+          ),
+        ],
       ),
     );
   }
 
-  Widget userField() {
+  Widget _userField() {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+        ),
         child: TextField(
           decoration: InputDecoration(
-              hintText: "Usuario", fillColor: Colors.white, filled: true),
+              hintText: "Correo", fillColor: Colors.white, filled: true),
         ));
   }
 
-  Widget passwordField() {
+  Widget _passwordField() {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+        ),
         child: TextField(
           obscureText: true,
           decoration: InputDecoration(
@@ -66,7 +75,49 @@ class _LoginState extends State<Login> {
         ));
   }
 
-  Widget loginButton() {
+  Widget _separator() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: 220,
+          child: Divider(
+            color: Colors.black38,
+            height: 25,
+            indent: 5,
+            endIndent: 5,
+          ),
+        ),
+        Text("O", style: TextStyle(fontWeight: FontWeight.bold)),
+        Container(
+          width: 220,
+          child: Divider(
+            color: Colors.black38,
+            height: 25,
+            indent: 5,
+            endIndent: 5,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _fbButton() {
+    return ElevatedButton(
+      style: ButtonStyle(),
+      onPressed: () {},
+      child: Text("CONTINUAR CON FACEBOOK"),
+    );
+  }
+
+  Widget _googleButton() {
+    return OutlinedButton(
+      onPressed: () {},
+      child: Text("CONTINUAR CON GOOGLE"),
+    );
+  }
+
+  Widget _loginButton() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 0),
       decoration: BoxDecoration(
