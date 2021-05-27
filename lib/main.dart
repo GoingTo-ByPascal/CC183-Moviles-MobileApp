@@ -15,6 +15,7 @@ class _GoingToState extends State<GoingTo> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "GoingTo",
+      debugShowCheckedModeBanner: false,
       home: Login(),
     );
   }
