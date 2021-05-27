@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:goingto_app/pages/home.dart';
+import 'package:goingto_app/pages/register.dart';
 
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);
@@ -11,54 +14,72 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: loginView());
+    return Scaffold(body: _loginView());
   }
 
-  Widget loginView() {
+  Widget _loginView() {
     return Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: NetworkImage(
-                    "https://i.pinimg.com/originals/88/58/03/8858035f8643b1f2d213ac3b2fd522ae.png"),
-                fit: BoxFit.cover)),
-        child: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            loginTitle(),
-            userField(),
-            passwordField(),
-            SizedBox(
-              height: 10.0,
+      color: Color(0xff3490de),
+      child: Column(
+        children: [
+          Center(
+            child: Container(
+                height: 250.0,
+                child: Image(image: AssetImage('assets/logotrans.png'))),
+          ),
+          Center(
+            child: Container(
+              height: 700.0,
+              width: 500.0,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _userField(),
+                  _passwordField(),
+                  _separator(),
+                  _fbButton(),
+                  SizedBox(height: 5.0),
+                  _googleButton(),
+                  SizedBox(height: 20.0),
+                  _loginButton(),
+                  SizedBox(height: 40.0),
+                  Text(
+                    "¿Aún no tienes una cuenta en GoingTo?",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  SizedBox(height: 20.0),
+                  _registerNavButton(),
+                ],
+              ),
             ),
-            loginButton()
-          ],
-        )));
-  }
-
-  Widget loginTitle() {
-    return Text(
-      "Inicia Sesión",
-      style: TextStyle(
-        color: Colors.black,
-        fontSize: 35.0,
-        fontWeight: FontWeight.bold,
+          ),
+        ],
       ),
     );
   }
 
-  Widget userField() {
+  Widget _userField() {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+        ),
         child: TextField(
           decoration: InputDecoration(
-              hintText: "Usuario", fillColor: Colors.white, filled: true),
+              hintText: "Correo", fillColor: Colors.white, filled: true),
         ));
   }
 
-  Widget passwordField() {
+  Widget _passwordField() {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+        ),
         child: TextField(
           obscureText: true,
           decoration: InputDecoration(
@@ -66,22 +87,127 @@ class _LoginState extends State<Login> {
         ));
   }
 
-  Widget loginButton() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 0),
-      decoration: BoxDecoration(
-          color: Colors.lightBlue,
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      child: TextButton(
-          onPressed: () => {
-                print("Presionaste el boton"),
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Home()))
-              },
-          child: Text(
-            "Login",
-            style: TextStyle(color: Colors.black),
-          )),
+  Widget _separator() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: 220,
+          child: Divider(
+            color: Colors.black38,
+            height: 25,
+            indent: 5,
+            endIndent: 5,
+          ),
+        ),
+        Text("O", style: TextStyle(fontWeight: FontWeight.bold)),
+        Container(
+          width: 220,
+          child: Divider(
+            color: Colors.black38,
+            height: 25,
+            indent: 5,
+            endIndent: 5,
+          ),
+        ),
+      ],
     );
+  }
+
+  Widget _fbButton() {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          primary: Color(0xff4267B2),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0))),
+      onPressed: () {},
+      child: SizedBox(
+        width: 400.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network(
+              'https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png',
+              height: 30.0,
+            ),
+            SizedBox(width: 7.0),
+            Text('CONTINUAR CON FACEBOOK'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _googleButton() {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          onPrimary: Colors.black,
+          primary: Colors.white,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0))),
+      onPressed: () {},
+      child: SizedBox(
+        width: 400.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network(
+              'https://i.imgur.com/cYIloHu.png',
+              height: 30.0,
+            ),
+            SizedBox(width: 7.0),
+            Text('CONTINUAR CON GOOGLE'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _loginButton() {
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            onPrimary: Colors.white,
+            primary: Color(0xffFF5757),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0))),
+        onPressed: () => {
+              print('Presionaste Iniciar Sesión'),
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Home()))
+            },
+        child: SizedBox(
+          width: 200.0,
+          height: 50.0,
+          child: Center(
+            child: Text(
+              "INICIAR SESIÓN",
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+        ));
+  }
+
+  Widget _registerNavButton() {
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            onPrimary: Colors.black,
+            primary: Colors.white,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0))),
+        onPressed: () => {
+              print('Presionaste Registrarme'),
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Register()))
+            },
+        child: SizedBox(
+          width: 200.0,
+          height: 50.0,
+          child: Center(
+            child: Text(
+              'REGISTRARME',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+        ));
   }
 }
