@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:goingto_app/pages/home.dart';
+import 'package:goingto_app/pages/register.dart';
 
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);
@@ -39,8 +42,17 @@ class _LoginState extends State<Login> {
                   _passwordField(),
                   _separator(),
                   _fbButton(),
+                  SizedBox(height: 5.0),
                   _googleButton(),
+                  SizedBox(height: 20.0),
                   _loginButton(),
+                  SizedBox(height: 40.0),
+                  Text(
+                    "¿Aún no tienes una cuenta en GoingTo?",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  SizedBox(height: 20.0),
+                  _registerNavButton(),
                 ],
               ),
             ),
@@ -104,35 +116,98 @@ class _LoginState extends State<Login> {
 
   Widget _fbButton() {
     return ElevatedButton(
-      style: ButtonStyle(),
+      style: ElevatedButton.styleFrom(
+          primary: Color(0xff4267B2),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0))),
       onPressed: () {},
-      child: Text("CONTINUAR CON FACEBOOK"),
+      child: SizedBox(
+        width: 400.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network(
+              'https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png',
+              height: 30.0,
+            ),
+            SizedBox(width: 7.0),
+            Text('CONTINUAR CON FACEBOOK'),
+          ],
+        ),
+      ),
     );
   }
 
   Widget _googleButton() {
-    return OutlinedButton(
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          onPrimary: Colors.black,
+          primary: Colors.white,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0))),
       onPressed: () {},
-      child: Text("CONTINUAR CON GOOGLE"),
+      child: SizedBox(
+        width: 400.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network(
+              'https://i.imgur.com/cYIloHu.png',
+              height: 30.0,
+            ),
+            SizedBox(width: 7.0),
+            Text('CONTINUAR CON GOOGLE'),
+          ],
+        ),
+      ),
     );
   }
 
   Widget _loginButton() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 0),
-      decoration: BoxDecoration(
-          color: Colors.lightBlue,
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      child: TextButton(
-          onPressed: () => {
-                print("Presionaste el boton"),
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Home()))
-              },
-          child: Text(
-            "Login",
-            style: TextStyle(color: Colors.black),
-          )),
-    );
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            onPrimary: Colors.white,
+            primary: Color(0xffFF5757),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0))),
+        onPressed: () => {
+              print('Presionaste Iniciar Sesión'),
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Home()))
+            },
+        child: SizedBox(
+          width: 200.0,
+          height: 50.0,
+          child: Center(
+            child: Text(
+              "INICIAR SESIÓN",
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+        ));
+  }
+
+  Widget _registerNavButton() {
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            onPrimary: Colors.black,
+            primary: Colors.white,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0))),
+        onPressed: () => {
+              print('Presionaste Registrarme'),
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Register()))
+            },
+        child: SizedBox(
+          width: 200.0,
+          height: 50.0,
+          child: Center(
+            child: Text(
+              'REGISTRARME',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+        ));
   }
 }
