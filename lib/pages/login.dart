@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:goingto_app/pages/home.dart';
 import 'package:goingto_app/pages/register.dart';
@@ -19,41 +17,47 @@ class _LoginState extends State<Login> {
 
   Widget _loginView() {
     return Container(
+      height: MediaQuery.of(context).size.height,
       color: Color(0xff3490de),
       child: Column(
         children: [
-          Center(
-            child: Container(
-                height: 250.0,
-                child: Image(image: AssetImage('assets/logotrans.png'))),
+          Expanded(
+            flex: 20,
+            child: Center(
+              child: Container(
+                  child: Image(image: AssetImage('assets/logotrans.png'))),
+            ),
           ),
-          Center(
-            child: Container(
-              height: 700.0,
-              width: 500.0,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _userField(),
-                  _passwordField(),
-                  _separator(),
-                  _fbButton(),
-                  SizedBox(height: 5.0),
-                  _googleButton(),
-                  SizedBox(height: 20.0),
-                  _loginButton(),
-                  SizedBox(height: 40.0),
-                  Text(
-                    "¿Aún no tienes una cuenta en GoingTo?",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                  SizedBox(height: 20.0),
-                  _registerNavButton(),
-                ],
+          Expanded(
+            flex: 80,
+            child: Center(
+              child: Container(
+                margin: EdgeInsets.all(50),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _userField(),
+                    _passwordField(),
+                    _separator(),
+                    _fbButton(),
+                    SizedBox(height: 5.0),
+                    _googleButton(),
+                    SizedBox(height: 20.0),
+                    _loginButton(),
+                    SizedBox(height: 40.0),
+                    Text(
+                      "¿Aún no tienes una cuenta en GoingTo?",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                    SizedBox(height: 20.0),
+                    _registerNavButton(),
+                  ],
+                ),
               ),
             ),
           ),

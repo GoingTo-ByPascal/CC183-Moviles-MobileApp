@@ -20,30 +20,34 @@ class _RegisterState extends State<Register> {
       color: Color(0xff3490de),
       child: Column(
         children: [
-          Center(
-            child: Container(
-                height: 250.0,
-                child: Image(image: AssetImage('assets/logotrans.png'))),
+          Expanded(
+            flex: 20,
+            child: Center(
+              child: Container(
+                  child: Image(image: AssetImage('assets/logotrans.png'))),
+            ),
           ),
-          Center(
-            child: Container(
-              height: 700.0,
-              width: 500.0,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _userField('Correo'),
-                  SizedBox(height: 30.0),
-                  _passwordField('Contraseña'),
-                  SizedBox(height: 30.0),
-                  _passwordField('Confirmar Contraseña'),
-                  SizedBox(height: 80.0),
-                  _registerButton(),
-                ],
+          Expanded(
+            flex: 80,
+            child: Center(
+              child: Container(
+                margin: EdgeInsets.all(50),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _userField('Correo'),
+                    SizedBox(height: 30.0),
+                    _passwordField('Contraseña'),
+                    SizedBox(height: 30.0),
+                    _passwordField('Confirmar Contraseña'),
+                    SizedBox(height: 80.0),
+                    _registerButton(),
+                  ],
+                ),
               ),
             ),
           ),
