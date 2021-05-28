@@ -61,7 +61,7 @@ class _ExploreState extends State<Explore> {
           if (snapshot.hasData) {
             print("Good");
             return GridView.count(
-                crossAxisCount: 3, children: _listCountries(snapshot.data));
+                crossAxisCount: 2, children: _listCountries(snapshot.data));
           } else if (snapshot.hasError) {
             print(snapshot.error);
             return Text("Error");
