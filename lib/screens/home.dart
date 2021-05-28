@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:goingto_app/pages/explore.dart';
-import 'package:goingto_app/pages/search.dart';
-import 'package:goingto_app/pages/achievements.dart';
-import 'package:goingto_app/pages/favourites.dart';
-import 'package:goingto_app/pages/profile.dart';
+import 'package:goingto_app/screens/explore.dart';
+import 'package:goingto_app/screens/search.dart';
+import 'package:goingto_app/screens/achievements.dart';
+import 'package:goingto_app/screens/favourites.dart';
+import 'package:goingto_app/screens/profile.dart';
 
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
