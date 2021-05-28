@@ -44,7 +44,12 @@ class _AchievementsState extends State<Achievements> {
     return Scaffold(
       body: Column(
         children: [
-          Text("Achievements"),
+          Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Text(
+                "Achievements",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+              )),
           Expanded(
               child: FutureBuilder(
             future: _listadoAchievement,
