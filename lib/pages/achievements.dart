@@ -42,23 +42,30 @@ class _AchievementsState extends State<Achievements> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: FutureBuilder(
-      future: _listadoAchievement,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          print(snapshot.data);
-          return ListView(
-            children: _listAchievements(snapshot.data),
-          );
-        } else if (snapshot.hasError) {
-          print(snapshot.error);
-          return Text("error");
-        }
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    ));
+      body: Column(
+        children: [
+          Text("Achievements"),
+          Expanded(
+              child: FutureBuilder(
+            future: _listadoAchievement,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                print(snapshot.data);
+                return ListView(
+                  children: _listAchievements(snapshot.data),
+                );
+              } else if (snapshot.hasError) {
+                print(snapshot.error);
+                return Text("error");
+              }
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          ))
+        ],
+      ),
+    );
   }
 
   List<Widget> _listAchievements(data) {
