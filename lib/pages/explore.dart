@@ -17,21 +17,9 @@ class _ExploreState extends State<Explore> {
 
   Future<List> _getPlaces() async {
     final response = await http.get(Uri.parse(urlBase));
-
     if (response.statusCode == HttpStatus.ok) {
-      final jsonData = json.decode(response.body);
-      final _placesMap = jsonData;
-      List _places = _placesMap.map((map) => Place.fromMap(map)).toList();
-
-      /*
-      for (var item in jsonData) {
-        _places.add(Place(
-            shortName: item["shortName"],
-            fullName: item["fullName"],
-            image: item["image"]));
-        print(item["shortName"] + " " + item["fullName"] + " " + item["image"]);
-      }*/
-
+      final _placesResponse = json.decode(response.body);
+      List _places = _placesResponse.map((map) => Place.fromJson(map)).toList();
       return _places;
     } else {
       throw Exception("Falló");
@@ -46,16 +34,26 @@ class _ExploreState extends State<Explore> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: _buildCountries());
+    return Scaffold(body: _exploreView());
   }
 
   Widget _exploreView() {
-    return Center(
-      child: Column(
-        children: [
-          Text("Explore"),
-        ],
-      ),
+    return Column(
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width,
+          color: Color(0xff3490de),
+          child: Text('Explore',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 28,
+              )),
+        ),
+        Expanded(
+          child: _buildCountries(),
+        ),
+      ],
     );
   }
 
@@ -65,7 +63,6 @@ class _ExploreState extends State<Explore> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             print("Good");
-            print(snapshot.data);
             return GridView.count(
                 crossAxisCount: 3, children: _listarCountries(snapshot.data));
           } else if (snapshot.hasError) {
@@ -86,10 +83,15 @@ class _ExploreState extends State<Explore> {
           place.image,
           fit: BoxFit.fill,
         )),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(place.name),
-        )
+        //padding: const EdgeInsets.all(8.0),
+        Text(
+          place.name,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        Text(place.locatable.address),
       ])));
     }
     return places;
