@@ -1,13 +1,25 @@
-import 'dart:ffi';
 import 'package:goingto_app/models/geographic/LocatableType.dart';
 
 class Locatable {
   String address;
   String description;
-  Float latitude;
-  Float longitude;
-  LocatableType locatableType;
+  double? latitude;
+  double? longitude;
+  LocatableType? locatableType;
 
-  Locatable(this.address, this.description, this.latitude, this.longitude,
-      this.locatableType);
+  Locatable(
+      {required this.address,
+      required this.description,
+      required this.latitude,
+      required this.longitude,
+      this.locatableType});
+
+  factory Locatable.fromJson(Map<String, dynamic> data) {
+    return Locatable(
+      address: data['address'],
+      description: data['description'],
+      latitude: data['latitude'],
+      longitude: data['longitud'],
+    );
+  }
 }
