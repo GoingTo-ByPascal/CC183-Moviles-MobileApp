@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:goingto_app/constants/api_path.dart';
-import 'package:goingto_app/models/geographic/Place.dart';
+import 'package:goingto_app/models/geographic/place.dart';
 import 'package:http/http.dart' as http;
 
 class Explore extends StatefulWidget {
@@ -64,7 +64,7 @@ class _ExploreState extends State<Explore> {
           if (snapshot.hasData) {
             print("Good");
             return GridView.count(
-                crossAxisCount: 3, children: _listarCountries(snapshot.data));
+                crossAxisCount: 3, children: _listCountries(snapshot.data));
           } else if (snapshot.hasError) {
             print(snapshot.error);
             return Text("Error");
@@ -73,7 +73,7 @@ class _ExploreState extends State<Explore> {
         });
   }
 
-  List<Widget> _listarCountries(data) {
+  List<Widget> _listCountries(data) {
     List<Widget> places = [];
     for (var place in data) {
       places.add(Card(
@@ -83,7 +83,6 @@ class _ExploreState extends State<Explore> {
           place.image,
           fit: BoxFit.fill,
         )),
-        //padding: const EdgeInsets.all(8.0),
         Text(
           place.name,
           style: TextStyle(
