@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:goingto_app/constants/api_path.dart';
 import 'package:goingto_app/models/geographic/place.dart';
+import 'package:goingto_app/screens/place_info.dart';
 import 'package:http/http.dart' as http;
 
 class Explore extends StatefulWidget {
@@ -69,29 +70,41 @@ class _ExploreState extends State<Explore> {
             print(snapshot.error);
             return Text("Error");
           }
-          return Center(child: RefreshProgressIndicator());
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         });
   }
 
   List<Widget> _listCountries(data) {
     List<Widget> places = [];
     for (var place in data) {
-      places.add(Card(
-          child: Column(children: [
-        Expanded(
-            child: Image.network(
-          place.image,
-          fit: BoxFit.fill,
-        )),
-        Text(
-          place.name,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
+      places.add(InkWell(
+        onLongPress: () {
+          print(place.name);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      PlaceInfo(place: place)));
+        },
+        child: Card(
+            child: Column(children: [
+          Expanded(
+              child: Image.network(
+            place.image,
+            fit: BoxFit.fill,
+          )),
+          Text(
+            place.name,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
           ),
-        ),
-        Text(place.locatable.address),
-      ])));
+          Text(place.locatable.address),
+        ])),
+      ));
     }
     return places;
   }
