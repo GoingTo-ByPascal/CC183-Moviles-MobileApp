@@ -7,14 +7,14 @@ class Place {
   String image;
   int stars;
   City? city;
-  Locatable? locatable;
+  Locatable locatable;
 
   Place(
       {required this.id,
       required this.name,
       required this.image,
       this.city,
-      this.locatable,
+      required this.locatable,
       required this.stars});
 
   factory Place.fromJson(Map<String, dynamic> data) {

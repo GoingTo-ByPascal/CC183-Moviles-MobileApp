@@ -4,14 +4,14 @@ import 'package:goingto_app/models/geographic/locatable.dart';
 class Review {
   String comment;
   int stars;
-  DateTime reviewedAt;
+  DateTime? reviewedAt;
   UserProfile? userProfile;
   Locatable? locatable;
 
   Review({
     required this.comment,
     required this.stars,
-    required this.reviewedAt,
+    this.reviewedAt,
     this.userProfile,
     this.locatable,
   });
@@ -20,8 +20,8 @@ class Review {
     return Review(
       comment: data['comment'],
       stars: data['stars'],
-      reviewedAt: data['reviewedAt'],
-      userProfile: UserProfile.fromJson(data['userProfile']),
+      //reviewedAt: data['reviewedAt'],
+      //userProfile: UserProfile.fromJson(data['userProfile']),
       locatable: Locatable.fromJson(data['locatable']),
     );
   }

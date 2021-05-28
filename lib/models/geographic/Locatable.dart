@@ -3,7 +3,7 @@ import 'dart:ffi';
 import 'package:goingto_app/models/geographic/locatable_type.dart';
 
 class Locatable {
-  int? id;
+  int id;
   String address;
   String description;
   double? latitude;
@@ -11,7 +11,7 @@ class Locatable {
   LocatableType? locatableType;
 
   Locatable(
-      {this.id,
+      {required this.id,
       required this.address,
       required this.description,
       this.latitude,
