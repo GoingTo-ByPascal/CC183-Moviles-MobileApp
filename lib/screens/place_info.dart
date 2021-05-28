@@ -62,8 +62,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              PlaceTips(placeId: widget.place.id)));
+                          builder: (context) => PlaceTips(
+                              locatableId: widget.place.locatable.id)));
                 },
                 child: Text("TIPS"),
               ),
@@ -72,8 +72,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              PlaceReviews(placeId: widget.place.id)));
+                          builder: (context) => PlaceReviews(
+                              locatableId: widget.place.locatable.id)));
                 },
                 child: Text("REVIEWS"),
               ),
