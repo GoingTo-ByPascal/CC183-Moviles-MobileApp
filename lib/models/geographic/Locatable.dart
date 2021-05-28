@@ -1,4 +1,4 @@
-import 'package:goingto_app/models/geographic/LocatableType.dart';
+import 'package:goingto_app/models/geographic/locatable_type.dart';
 
 class Locatable {
   String address;

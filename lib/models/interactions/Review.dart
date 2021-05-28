@@ -1,4 +1,4 @@
-import 'package:goingto_app/models/accounts/UserProfile.dart';
+import 'package:goingto_app/models/accounts/user_profile.dart';
 import 'package:goingto_app/models/geographic/locatable.dart';
 
 class Review {

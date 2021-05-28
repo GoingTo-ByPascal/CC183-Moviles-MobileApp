@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:goingto_app/constants/api_path.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:goingto_app/models/accounts/Achievement.dart';
@@ -14,13 +16,11 @@ class _AchievementsState extends State<Achievements> {
   late Future<List<Achievement>> _listadoAchievement;
 
   Future<List<Achievement>> _getAchievements() async {
-    var url = Uri.parse(
-        "https://goingto-api.azurewebsites.net/api/Users/2/Achievements");
-    final response = await http.get(url);
+    final response = await http.get(Uri.parse(urlBase + urlUserAchievements));
     List<Achievement> achievements = [];
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       String body = utf8.decode(response.bodyBytes);
-      final jsonData = jsonDecode(body);
+      final jsonData = json.decode(body);
 
       for (var item in jsonData) {
         achievements

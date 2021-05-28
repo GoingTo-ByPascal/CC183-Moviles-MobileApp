@@ -16,7 +16,7 @@ class _ExploreState extends State<Explore> {
   late Future<List> _placesFuture;
 
   Future<List> _getPlaces() async {
-    final response = await http.get(Uri.parse(urlBase));
+    final response = await http.get(Uri.parse(urlBase + urlPlaces));
     if (response.statusCode == HttpStatus.ok) {
       final _placesResponse = json.decode(response.body);
       List _places = _placesResponse.map((map) => Place.fromJson(map)).toList();
