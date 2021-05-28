@@ -16,46 +16,100 @@ class _LoginState extends State<Login> {
   }
 
   Widget _loginView() {
+    // Container de toda la página
     return Container(
-      height: MediaQuery.of(context).size.height,
+      //height: MediaQuery.of(context).size.height,
+      // Fondo azul
       color: Color(0xff3490de),
       child: Column(
         children: [
+          // Primer hijo: imagen de GoinTo
           Expanded(
-            flex: 20,
+            flex: 18,
             child: Center(
               child: Container(
                   child: Image(image: AssetImage('assets/logotrans.png'))),
             ),
           ),
+          // Segundo hijo: rectángulo blanco
           Expanded(
-            flex: 80,
+            flex: 90,
             child: Center(
               child: Container(
-                margin: EdgeInsets.all(50),
+                // Diseño del rectángulo blanco
+                margin: EdgeInsets.all(10),
+                padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.all(Radius.circular(20.0))),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  // Widgets dentro del rectangulo blanco
                   children: [
-                    _userField(),
-                    _passwordField(),
-                    _separator(),
-                    _fbButton(),
-                    SizedBox(height: 5.0),
-                    _googleButton(),
-                    SizedBox(height: 20.0),
-                    _loginButton(),
-                    SizedBox(height: 40.0),
-                    Text(
-                      "¿Aún no tienes una cuenta en GoingTo?",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    // User y Password Field con su botón de inicio
+                    Expanded(
+                      flex: 40,
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _userField(),
+                            _passwordField(),
+                            SizedBox(height: 15.0),
+                            _loginButton(),
+                            SizedBox(height: 5.0),
+                            Text('¿Olvidaste tu contraseña?',
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.bold))
+                          ],
+                        ),
+                      ),
                     ),
-                    SizedBox(height: 20.0),
-                    _registerNavButton(),
+                    Expanded(
+                      flex: 5,
+                      child: Container(
+                        child: Column(
+                          children: [
+                            _separator(),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Botones de inicio de sesión alternativo en un container
+                    Expanded(
+                      flex: 30,
+                      child: Container(
+                        child: Column(
+                          children: [
+                            _fbButton(),
+                            SizedBox(height: 5.0),
+                            _googleButton(),
+                            SizedBox(height: 20.0),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    // Registrarme con texto de pregunta
+                    Expanded(
+                      flex: 25,
+                      child: Container(
+                        child: Column(
+                          children: [
+                            Text(
+                              "¿Aún no tienes una cuenta en GoingTo?",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 20.0),
+                            _registerNavButton(),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -96,7 +150,7 @@ class _LoginState extends State<Login> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: 220,
+          width: MediaQuery.of(context).size.width * 0.4,
           child: Divider(
             color: Colors.black38,
             height: 25,
@@ -106,7 +160,7 @@ class _LoginState extends State<Login> {
         ),
         Text("O", style: TextStyle(fontWeight: FontWeight.bold)),
         Container(
-          width: 220,
+          width: MediaQuery.of(context).size.width * 0.4,
           child: Divider(
             color: Colors.black38,
             height: 25,

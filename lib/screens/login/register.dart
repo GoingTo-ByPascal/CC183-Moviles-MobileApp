@@ -9,10 +9,7 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      home: Scaffold(body: _registerView()),
-    );
+    return Scaffold(body: _registerView());
   }
 
   Widget _registerView() {
@@ -20,32 +17,49 @@ class _RegisterState extends State<Register> {
       color: Color(0xff3490de),
       child: Column(
         children: [
+          // Primer hijo:imagen de GoingTo
           Expanded(
-            flex: 20,
+            flex: 18,
             child: Center(
               child: Container(
                   child: Image(image: AssetImage('assets/logotrans.png'))),
             ),
           ),
           Expanded(
-            flex: 80,
+            flex: 90,
             child: Center(
               child: Container(
-                margin: EdgeInsets.all(50),
+                // Diseño del rectángulo blanco
+                margin: EdgeInsets.all(10),
+                padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.all(Radius.circular(20.0))),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  // Widgets dentro del rectangulo blanco
                   children: [
-                    _userField('Correo'),
-                    SizedBox(height: 30.0),
-                    _passwordField('Contraseña'),
-                    SizedBox(height: 30.0),
-                    _passwordField('Confirmar Contraseña'),
-                    SizedBox(height: 80.0),
-                    _registerButton(),
+                    Expanded(
+                      flex: 90,
+                      child: Container(
+                        child: Column(
+                          children: [
+                            _userField('Correo'),
+                            SizedBox(height: 30.0),
+                            _passwordField('Contraseña'),
+                            SizedBox(height: 30.0),
+                            _passwordField('Confirmar Contraseña'),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 10,
+                      child: Container(
+                        child: _registerButton(),
+                      ),
+                    ),
                   ],
                 ),
               ),
