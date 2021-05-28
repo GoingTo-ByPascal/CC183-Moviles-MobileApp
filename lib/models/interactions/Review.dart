@@ -2,12 +2,27 @@ import 'package:goingto_app/models/accounts/user_profile.dart';
 import 'package:goingto_app/models/geographic/locatable.dart';
 
 class Review {
-  UserProfile userProfile;
-  Locatable locatable;
   String comment;
   int stars;
   DateTime reviewedAt;
+  UserProfile? userProfile;
+  Locatable? locatable;
 
-  Review(this.userProfile, this.locatable, this.comment, this.stars,
-      this.reviewedAt);
+  Review({
+    required this.comment,
+    required this.stars,
+    required this.reviewedAt,
+    this.userProfile,
+    this.locatable,
+  });
+
+  factory Review.fromJson(Map<String, dynamic> data) {
+    return Review(
+      comment: data['comment'],
+      stars: data['stars'],
+      reviewedAt: data['reviewedAt'],
+      userProfile: UserProfile.fromJson(data['userProfile']),
+      locatable: Locatable.fromJson(data['locatable']),
+    );
+  }
 }

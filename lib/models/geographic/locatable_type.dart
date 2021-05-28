@@ -1,5 +1,11 @@
 class LocatableType {
   String name;
 
-  LocatableType(this.name);
+  LocatableType({required this.name});
+
+  factory LocatableType.fromJson(Map<String, dynamic> data) {
+    return LocatableType(
+      name: data['name'],
+    );
+  }
 }

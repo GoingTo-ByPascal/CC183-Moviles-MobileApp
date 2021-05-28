@@ -3,5 +3,10 @@ class Achievement {
   String text;
   int points;
 
-  Achievement(this.name, this.text, this.points);
+  Achievement({required this.name, required this.text, required this.points});
+
+  factory Achievement.fromJson(Map<String, dynamic> data) {
+    return Achievement(
+        name: data['name'], text: data['text'], points: data['points']);
+  }
 }

@@ -1,4 +1,4 @@
-import 'package:goingto_app/models/geographic/Locatable.dart';
+import 'package:goingto_app/models/geographic/locatable.dart';
 
 class Country {
   String shortName;
@@ -17,8 +17,7 @@ class Country {
       shortName: data['shortName'],
       fullName: data['fullName'],
       image: data['image'],
-      //locatable: Locatable.fromJson(data['locatable']),
-      //city: map['city'],
+      locatable: Locatable.fromJson(data['locatable']),
     );
   }
 }

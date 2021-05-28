@@ -2,14 +2,32 @@ import 'package:goingto_app/models/accounts/user.dart';
 import 'package:goingto_app/models/geographic/country.dart';
 
 class UserProfile {
-  Country country;
   String name;
   String surname;
   DateTime birthDate;
-  User user;
   String gender;
   DateTime createdAt;
+  User? user;
+  Country? country;
 
-  UserProfile(this.country, this.name, this.surname, this.birthDate, this.user,
-      this.gender, this.createdAt);
+  UserProfile(
+      {required this.name,
+      required this.surname,
+      required this.birthDate,
+      required this.gender,
+      required this.createdAt,
+      this.user,
+      this.country});
+
+  factory UserProfile.fromJson(Map<String, dynamic> data) {
+    return UserProfile(
+      name: data['name'],
+      surname: data['surname'],
+      birthDate: data['birthDate'],
+      gender: data['gender'],
+      createdAt: data['createdAt'],
+      user: User.fromJson(data['user']),
+      country: Country.fromJson(data['country']),
+    );
+  }
 }

@@ -3,8 +3,8 @@ import 'package:goingto_app/models/geographic/locatable_type.dart';
 class Locatable {
   String address;
   String description;
-  double? latitude;
-  double? longitude;
+  double latitude;
+  double longitude;
   LocatableType? locatableType;
 
   Locatable(
@@ -20,6 +20,7 @@ class Locatable {
       description: data['description'],
       latitude: data['latitude'],
       longitude: data['longitud'],
+      locatableType: LocatableType.fromJson(data['locatableType']),
     );
   }
 }
