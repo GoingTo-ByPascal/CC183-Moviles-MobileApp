@@ -2,6 +2,7 @@ import 'package:goingto_app/models/geographic/city.dart';
 import 'package:goingto_app/models/geographic/locatable.dart';
 
 class Place {
+  int id;
   String name;
   String image;
   int stars;
@@ -9,7 +10,8 @@ class Place {
   Locatable? locatable;
 
   Place(
-      {required this.name,
+      {required this.id,
+      required this.name,
       required this.image,
       this.city,
       this.locatable,
@@ -17,6 +19,7 @@ class Place {
 
   factory Place.fromJson(Map<String, dynamic> data) {
     return Place(
+      id: data['id'],
       name: data['name'],
       image: data['image'],
       stars: data['stars'],
