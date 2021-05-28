@@ -13,7 +13,7 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
-  late Future<List> _placesList;
+  late Future<List> _placesFuture;
 
   Future<List> _getPlaces() async {
     final response = await http.get(Uri.parse(urlBase));
@@ -21,7 +21,6 @@ class _ExploreState extends State<Explore> {
     if (response.statusCode == HttpStatus.ok) {
       final jsonData = json.decode(response.body);
       final _placesMap = jsonData;
-      print(_placesMap);
       List _places = _placesMap.map((map) => Place.fromMap(map)).toList();
 
       /*
@@ -41,13 +40,13 @@ class _ExploreState extends State<Explore> {
 
   @override
   void initState() {
+    _placesFuture = _getPlaces();
     super.initState();
-    _placesList = _getPlaces();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: _exploreView());
+    return Scaffold(body: _buildCountries());
   }
 
   Widget _exploreView() {
@@ -58,5 +57,41 @@ class _ExploreState extends State<Explore> {
         ],
       ),
     );
+  }
+
+  Widget _buildCountries() {
+    return FutureBuilder(
+        future: _placesFuture,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print("Good");
+            print(snapshot.data);
+            return GridView.count(
+                crossAxisCount: 3, children: _listarCountries(snapshot.data));
+          } else if (snapshot.hasError) {
+            print(snapshot.error);
+            return Text("Error");
+          }
+          return Center(child: RefreshProgressIndicator());
+        });
+  }
+
+  List<Widget> _listarCountries(data) {
+    List<Widget> places = [];
+    for (var place in data) {
+      places.add(Card(
+          child: Column(children: [
+        Expanded(
+            child: Image.network(
+          place.image,
+          fit: BoxFit.fill,
+        )),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(place.name),
+        )
+      ])));
+    }
+    return places;
   }
 }
