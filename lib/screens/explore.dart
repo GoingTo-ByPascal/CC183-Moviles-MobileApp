@@ -41,16 +41,12 @@ class _ExploreState extends State<Explore> {
   Widget _exploreView() {
     return Column(
       children: [
-        Container(
-          width: MediaQuery.of(context).size.width,
-          color: Color(0xff3490de),
-          child: Text('Explore',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 28,
-              )),
-        ),
+        Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Text(
+              'Explore',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+            )),
         Expanded(
           child: _buildCountries(),
         ),
@@ -82,11 +78,8 @@ class _ExploreState extends State<Explore> {
       places.add(InkWell(
         onLongPress: () {
           print(place.name);
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      PlaceInfo(place: place)));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => PlaceInfo(place: place)));
         },
         child: Card(
             child: Column(children: [

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:goingto_app/models/geographic/locatable_type.dart';
 
 class Locatable {

@@ -39,16 +39,12 @@ class _AchievementsState extends State<Achievements> {
     return Scaffold(
       body: Column(
         children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            color: Color(0xff3490de),
-            child: Text('Achievements',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 28,
-                )),
-          ),
+          Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Text(
+                'Achievements',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+              )),
           Expanded(
             child: _buildAchievements(),
           )

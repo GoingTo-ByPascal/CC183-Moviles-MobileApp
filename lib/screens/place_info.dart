@@ -48,7 +48,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
           child: Center(
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 40),
-              child: Text(widget.place.locatable!.description),
+              child: Text(widget.place.locatable.description),
             ),
           ),
         ),
