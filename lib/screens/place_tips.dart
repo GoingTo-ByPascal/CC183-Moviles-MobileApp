@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:goingto_app/constants/api_path.dart';
 import 'package:goingto_app/models/interactions/tip.dart';
+import 'package:goingto_app/screens/create_tip.dart';
 import 'package:http/http.dart' as http;
 
 class PlaceTips extends StatefulWidget {
@@ -48,6 +49,17 @@ class _PlaceTipsState extends State<PlaceTips> {
                   fontWeight: FontWeight.bold,
                   fontSize: 28,
                 )),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CreateTip(
+                            locatableId: widget.locatableId,
+                          )));
+            },
+            child: Text("Crear Tip"),
           ),
           Expanded(
             child: _buildTips(),
