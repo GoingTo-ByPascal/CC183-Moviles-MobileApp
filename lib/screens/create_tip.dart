@@ -75,6 +75,7 @@ class _CreateTipState extends State<CreateTip> {
                 ],
               )),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(primary: Color(0xff34D939)),
             onPressed: () {
               postearTip();
               Navigator.push(

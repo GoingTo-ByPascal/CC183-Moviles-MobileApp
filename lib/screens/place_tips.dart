@@ -50,6 +50,7 @@ class _PlaceTipsState extends State<PlaceTips> {
                     color: Color(0xffFF5757)),
               )),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(primary: Color(0xff34D939)),
             onPressed: () {
               Navigator.push(
                   context,

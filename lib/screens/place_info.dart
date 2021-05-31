@@ -71,6 +71,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Color(0xff34D939)),
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -81,6 +82,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 child: Text("TIPS"),
               ),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Color(0xff34D939)),
                 onPressed: () {
                   Navigator.push(
                       context,
