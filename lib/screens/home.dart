@@ -4,6 +4,7 @@ import 'package:goingto_app/screens/search.dart';
 import 'package:goingto_app/screens/achievements.dart';
 import 'package:goingto_app/screens/favourites.dart';
 import 'package:goingto_app/screens/profile.dart';
+import 'package:flutter/services.dart';
 
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
@@ -19,6 +20,12 @@ class _HomeState extends State<Home> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+    super.initState();
   }
 
   navigate() {

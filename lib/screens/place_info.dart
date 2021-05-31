@@ -20,15 +20,28 @@ class _PlaceInfoState extends State<PlaceInfo> {
     );
   }
 
+/* Padding(
+              padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+              child: Text(
+                widget.place.name,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
+                    color: Color(0xffFF5757)),
+              )),*/
+
   Widget _placeView() {
     return Column(
       children: [
-        Expanded(
-          flex: 15,
-          child: Center(
-            child: Text(widget.place.name),
-          ),
-        ),
+        Padding(
+            padding: const EdgeInsets.only(top: 40.0),
+            child: Text(
+              widget.place.name,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                  color: Color(0xffFF5757)),
+            )),
         Expanded(
           flex: 35,
           child: Center(

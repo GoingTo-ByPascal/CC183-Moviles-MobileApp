@@ -42,10 +42,13 @@ class _ExploreState extends State<Explore> {
     return Column(
       children: [
         Padding(
-            padding: const EdgeInsets.only(top: 10.0),
+            padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
             child: Text(
               'Explore',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                  color: Color(0xffFF5757)),
             )),
         Expanded(
           child: _buildCountries(),

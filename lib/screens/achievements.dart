@@ -40,10 +40,13 @@ class _AchievementsState extends State<Achievements> {
       body: Column(
         children: [
           Padding(
-              padding: const EdgeInsets.only(top: 10.0),
+              padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
               child: Text(
                 'Achievements',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
+                    color: Color(0xffFF5757)),
               )),
           Expanded(
             child: _buildAchievements(),

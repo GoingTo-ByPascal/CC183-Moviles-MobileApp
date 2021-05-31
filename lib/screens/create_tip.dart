@@ -40,10 +40,13 @@ class _CreateTipState extends State<CreateTip> {
       child: Column(
         children: [
           Padding(
-              padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+              padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
               child: Text(
                 'Crea un tip',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
+                    color: Color(0xffFF5757)),
               )),
           Card(
               margin:

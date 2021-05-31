@@ -40,16 +40,15 @@ class _PlaceReviewsState extends State<PlaceReviews> {
     return Scaffold(
       body: Column(
         children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            color: Color(0xff3490de),
-            child: Text('Reviews',
-                textAlign: TextAlign.center,
+          Padding(
+              padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+              child: Text(
+                'Reviews',
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 28,
-                )),
-          ),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
+                    color: Color(0xffFF5757)),
+              )),
           Expanded(
             child: _buildReviews(),
           )
