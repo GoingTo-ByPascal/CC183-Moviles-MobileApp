@@ -1,29 +1,47 @@
-import 'package:goingto_app/models/geographic/locatable_type.dart';
-
 class Locatable {
   int id;
+  String name;
   String address;
   String description;
-  double? latitude;
-  double? longitude;
-  LocatableType? locatableType;
+  String bannerImage;
+  double latitude;
+  double longitude;
+  int locatableTypeId;
+  List<dynamic> locatableImages;
 
-  Locatable(
-      {required this.id,
-      required this.address,
-      required this.description,
-      this.latitude,
-      this.longitude,
-      this.locatableType});
+  Locatable({
+    required this.id,
+    required this.name,
+    required this.address,
+    required this.description,
+    required this.bannerImage,
+    required this.latitude,
+    required this.longitude,
+    required this.locatableTypeId,
+    required this.locatableImages,
+  });
+  factory Locatable.fromJson(Map<String, dynamic> json) => Locatable(
+        id: json["id"],
+        name: json["name"],
+        address: json["address"],
+        description: json["description"],
+        bannerImage: json["bannerImage"],
+        latitude: json["latitude"].toDouble(),
+        longitude: json["longitude"].toDouble(),
+        locatableTypeId: json["locatableTypeId"],
+        locatableImages:
+            List<dynamic>.from(json["locatableImages"].map((x) => x)),
+      );
 
-  factory Locatable.fromJson(Map<String, dynamic> data) {
-    return Locatable(
-      id: data['id'],
-      address: data['address'],
-      description: data['description'],
-      //latitude: data['latitude'],
-      //longitude: data['longitud'],
-      //locatableType: LocatableType.fromJson(data['locatableType']),
-    );
-  }
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "address": address,
+        "description": description,
+        "bannerImage": bannerImage,
+        "latitude": latitude,
+        "longitude": longitude,
+        "locatableTypeId": locatableTypeId,
+        "locatableImages": List<dynamic>.from(locatableImages.map((x) => x)),
+      };
 }
