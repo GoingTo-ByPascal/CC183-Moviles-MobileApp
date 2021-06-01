@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:goingto_app/models/interactions/review.dart';
 import 'package:http/http.dart' as http;
 
-class PlaceReviewPost extends StatefulWidget {
-  PlaceReviewPost({Key? key}) : super(key: key);
+class CreateReview extends StatefulWidget {
+  CreateReview({Key? key}) : super(key: key);
 
   @override
-  _PlaceReviewPostState createState() => _PlaceReviewPostState();
+  _CreateReviewState createState() => _CreateReviewState();
 }
 
 Future<Review> createReview(String comment, int stars) async {
@@ -48,7 +48,7 @@ Future<Review> createReview(String comment, int stars) async {
   }
 }
 
-class _PlaceReviewPostState extends State<PlaceReviewPost> {
+class _CreateReviewState extends State<CreateReview> {
   late Review _review = Review(comment: "placehholder", stars: 5);
 
   final TextEditingController nameController = TextEditingController();
