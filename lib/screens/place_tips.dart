@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:goingto_app/constants/api_path.dart';
 import 'package:goingto_app/models/interactions/tip.dart';
-import 'package:goingto_app/screens/create_tip.dart';
 import 'package:http/http.dart' as http;
 
 class PlaceTips extends StatefulWidget {
@@ -17,6 +16,8 @@ class PlaceTips extends StatefulWidget {
 class _PlaceTipsState extends State<PlaceTips> {
   late Future<List> _tipsFuture;
 
+  final TextEditingController textController = TextEditingController();
+
   Future<List> _getTips() async {
     final response = await http.get(Uri.parse(
         urlBase + urlLocatables + widget.locatableId.toString() + urlTips));
@@ -27,6 +28,20 @@ class _PlaceTipsState extends State<PlaceTips> {
     } else {
       throw Exception('Falló');
     }
+  }
+
+  void _postTip() async {
+    var url = Uri.parse(urlBase +
+        "Users/2/Locatables/" +
+        widget.locatableId.toString() +
+        urlTips);
+    var response = await http.post(url,
+        body: json.encode({
+          'text': this.textController.text,
+        }),
+        headers: {HttpHeaders.contentTypeHeader: "application/json"});
+    final String responseString = response.body;
+    tipFromJson(responseString);
   }
 
   @override
@@ -52,12 +67,7 @@ class _PlaceTipsState extends State<PlaceTips> {
           ElevatedButton(
             style: ElevatedButton.styleFrom(primary: Color(0xff34D939)),
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CreateTip(
-                            locatableId: widget.locatableId,
-                          )));
+              _createTip();
             },
             child: Text("Crear Tip"),
           ),
@@ -105,5 +115,65 @@ class _PlaceTipsState extends State<PlaceTips> {
           )));
     }
     return tips;
+  }
+
+  void _createTip() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            height: MediaQuery.of(context).size.height * 0.5,
+            padding: EdgeInsets.symmetric(vertical: 300),
+            child: Card(
+              //padding: EdgeInsets.all(32),
+              child: Column(
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                      child: Text(
+                        'Crea un Tip',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                            color: Color(0xffFF5757)),
+                      )),
+                  Card(
+                      margin: const EdgeInsets.only(
+                          bottom: 15.0, left: 20.0, right: 20.0),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Text(
+                              'Redacta tu Tip',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20.0),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: TextField(
+                              controller: textController,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Escribe algo'),
+                            ),
+                          ),
+                        ],
+                      )),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Color(0xff34D939)),
+                    onPressed: () {
+                      _postTip();
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    },
+                    child: Text("Crear Tip"),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

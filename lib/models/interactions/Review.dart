@@ -26,8 +26,8 @@ class Review {
       comment: data['comment'],
       stars: data['stars'],
       //reviewedAt: data['reviewedAt'],
-      //userProfile: UserProfile.fromJson(data['userProfile']),
-      locatable: Locatable.fromJson(data['locatable']),
+      userProfile: UserProfile.fromJson(data['userProfile']),
+      //locatable: Locatable.fromJson(data['locatable']),
     );
   }
   Map<String, dynamic> toJson() => {
@@ -35,6 +35,6 @@ class Review {
         "stars": stars,
         "reviewedAt": reviewedAt,
         //"locatable": locatable.toJson(),
-        //"userProfile": userProfile.toJson(),
+        "userProfile": userProfile!.toJson(),
       };
 }
