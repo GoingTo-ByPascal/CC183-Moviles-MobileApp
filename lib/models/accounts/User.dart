@@ -1,4 +1,10 @@
+import 'dart:convert';
+
 import 'package:goingto_app/models/accounts/wallet.dart';
+
+User userFromJson(String str) => User.fromJson(json.decode(str));
+
+String userToJson(User data) => json.encode(data.toJson());
 
 class User {
   String email;
@@ -14,4 +20,9 @@ class User {
       password: data['password'],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        "email": email,
+        "password": password,
+      };
 }

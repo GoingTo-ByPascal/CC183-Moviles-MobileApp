@@ -1,5 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:goingto_app/constants/api_path.dart';
+import 'package:goingto_app/models/accounts/user.dart';
 import '../home.dart';
+import 'package:http/http.dart' as http;
 
 class Register extends StatefulWidget {
   @override
@@ -7,6 +13,25 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passwordConfirmationController =
+      TextEditingController();
+
+  Future<User> _postUser() async {
+    var url = Uri.parse(urlBase + "/users");
+    var response = await http.post(url,
+        body: json.encode({
+          "email": emailController.text,
+          "password": passwordController.text,
+        }),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+        });
+    final String responseString = response.body;
+    return userFromJson(responseString);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: _registerView());
@@ -47,9 +72,9 @@ class _RegisterState extends State<Register> {
                           children: [
                             _userField('Correo'),
                             SizedBox(height: 30.0),
-                            _passwordField('Contraseña'),
+                            _passwordField(),
                             SizedBox(height: 30.0),
-                            _passwordField('Confirmar Contraseña'),
+                            _passwordConfirmationField(),
                           ],
                         ),
                       ),
@@ -77,12 +102,13 @@ class _RegisterState extends State<Register> {
           border: Border.all(color: Colors.black),
         ),
         child: TextField(
+          controller: emailController,
           decoration: InputDecoration(
               hintText: hint, fillColor: Colors.white, filled: true),
         ));
   }
 
-  Widget _passwordField(String hint) {
+  Widget _passwordField() {
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         decoration: BoxDecoration(
@@ -90,8 +116,25 @@ class _RegisterState extends State<Register> {
         ),
         child: TextField(
           obscureText: true,
+          controller: passwordController,
           decoration: InputDecoration(
-              hintText: hint, fillColor: Colors.white, filled: true),
+              hintText: "Contraseña", fillColor: Colors.white, filled: true),
+        ));
+  }
+
+  Widget _passwordConfirmationField() {
+    return Container(
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+        ),
+        child: TextField(
+          obscureText: true,
+          controller: passwordConfirmationController,
+          decoration: InputDecoration(
+              hintText: "Confirmar Contraseña",
+              fillColor: Colors.white,
+              filled: true),
         ));
   }
 
@@ -103,9 +146,27 @@ class _RegisterState extends State<Register> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0))),
         onPressed: () => {
-              print('Presionaste Iniciar Sesión'),
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Home()))
+              print(emailController.text),
+              print(passwordController.text),
+              print(passwordConfirmationController.text),
+              passwordController.text == passwordConfirmationController.text
+                  ? Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Home()))
+                  : showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Center(
+                            child: Card(
+                                child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text('LA CONTRASEÑA NO COINCIDE'),
+                            ElevatedButton(
+                                onPressed: () => {Navigator.pop(context)},
+                                child: Text("ACEPTAR"))
+                          ],
+                        )));
+                      }),
             },
         child: SizedBox(
           width: 200.0,
