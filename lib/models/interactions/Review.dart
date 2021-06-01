@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:goingto_app/models/accounts/user_profile.dart';
 import 'package:goingto_app/models/geographic/locatable.dart';
+
+Review reviewFromJson(String str) => Review.fromJson(json.decode(str));
+
+String reviewToJson(Review data) => json.encode(data.toJson());
 
 class Review {
   String comment;

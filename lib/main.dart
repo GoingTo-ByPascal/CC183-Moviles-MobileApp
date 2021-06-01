@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:goingto_app/screens/place_review_post.dart';
 import 'screens/login/login.dart';
 
 void main() => runApp(GoingTo());
@@ -16,7 +17,7 @@ class _GoingToState extends State<GoingTo> {
     return MaterialApp(
       title: "GoingTo",
       debugShowCheckedModeBanner: false,
-      home: Login(),
+      home: PlaceReviewPost(),
     );
   }
 }
