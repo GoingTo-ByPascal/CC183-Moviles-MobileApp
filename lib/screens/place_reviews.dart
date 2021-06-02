@@ -153,62 +153,54 @@ class _PlaceReviewsState extends State<PlaceReviews> {
         context: context,
         builder: (BuildContext context) {
           return Container(
-            height: MediaQuery.of(context).size.height * 0.5,
-            padding: EdgeInsets.symmetric(vertical: 300),
-            child: Card(
-              child: Column(
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-                      child: Text(
-                        'Crea un Review',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
-                            color: Color(0xffFF5757)),
-                      )),
-                  Card(
-                      margin: const EdgeInsets.only(
-                          bottom: 15.0, left: 20.0, right: 20.0),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Text(
-                              'Redacta tu Review',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20.0),
-                            ),
+            padding: EdgeInsets.all(20.0),
+            child: Center(
+              child: Container(
+                child: Card(
+                    margin: const EdgeInsets.only(
+                        bottom: 15.0, left: 20.0, right: 20.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Text(
+                            'Crea una Review',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0,
+                                color: Color(0xffFF5757)),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: TextField(
-                              controller: commentController,
-                              decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  hintText: 'Escribe algo'),
-                            ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: TextField(
+                            controller: commentController,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText: 'Escribe algo'),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Rating((rating) {
-                              setState(() {
-                                _rating = rating;
-                              });
-                            }, 5),
-                          ),
-                        ],
-                      )),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Color(0xff34D939)),
-                    onPressed: () {
-                      _postReview();
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                    },
-                    child: Text("Crear Review"),
-                  ),
-                ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Rating((rating) {
+                            setState(() {
+                              _rating = rating;
+                            });
+                          }, 5),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: Color(0xff34D939)),
+                          onPressed: () {
+                            _postReview();
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          },
+                          child: Text("Crear Review"),
+                        ),
+                      ],
+                    )),
               ),
             ),
           );

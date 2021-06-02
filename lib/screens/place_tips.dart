@@ -125,55 +125,47 @@ class _PlaceTipsState extends State<PlaceTips> {
         context: context,
         builder: (BuildContext context) {
           return Container(
-            height: MediaQuery.of(context).size.height * 0.5,
-            padding: EdgeInsets.symmetric(vertical: 300),
-            child: Card(
-              //padding: EdgeInsets.all(32),
-              child: Column(
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-                      child: Text(
-                        'Crea un Tip',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
-                            color: Color(0xffFF5757)),
-                      )),
-                  Card(
-                      margin: const EdgeInsets.only(
-                          bottom: 15.0, left: 20.0, right: 20.0),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Text(
-                              'Redacta tu Tip',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20.0),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: TextField(
-                              controller: textController,
-                              decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  hintText: 'Escribe algo'),
-                            ),
-                          ),
-                        ],
-                      )),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Color(0xff34D939)),
-                    onPressed: () {
-                      _postTip();
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                    },
-                    child: Text("Crear Tip"),
+            padding: EdgeInsets.all(20.0),
+            child: Center(
+              child: Container(
+                child: Card(
+                  margin: const EdgeInsets.only(
+                      bottom: 15.0, left: 20.0, right: 20.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Text(
+                          'Crea un Tip',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
+                              color: Color(0xffFF5757)),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: TextField(
+                          controller: textController,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Escribe algo'),
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Color(0xff34D939)),
+                        onPressed: () {
+                          _postTip();
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        },
+                        child: Text("Crear Tip"),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           );
