@@ -1,38 +1,52 @@
-import 'package:goingto_app/models/accounts/user.dart';
-import 'package:goingto_app/models/geographic/country.dart';
+import 'dart:convert';
+
+import 'package:goingto_app/models/geographic/Country.dart';
+
+UserProfile userProfileFromJson(String str) =>
+    UserProfile.fromJson(json.decode(str));
+
+String userProfileToJson(UserProfile data) => json.encode(data.toJson());
 
 class UserProfile {
+  UserProfile({
+    required this.userId,
+    required this.name,
+    required this.surname,
+    required this.birthDate,
+    required this.gender,
+    required this.createdAt,
+    required this.profilePhoto,
+    required this.country,
+  });
+
+  int userId;
   String name;
   String surname;
-  DateTime? birthDate;
-  String? gender;
-  DateTime? createdAt;
-  User? user;
-  Country? country;
+  String birthDate;
+  String gender;
+  String createdAt;
+  String profilePhoto;
+  Country country;
 
-  UserProfile(
-      {required this.name,
-      required this.surname,
-      this.birthDate,
-      this.gender,
-      this.createdAt,
-      this.user,
-      this.country});
+  factory UserProfile.fromJson(Map<String, dynamic> json) => UserProfile(
+        userId: json["userId"],
+        name: json["name"],
+        surname: json["surname"],
+        birthDate: json["birthDate"],
+        gender: json["gender"],
+        createdAt: json["createdAt"],
+        profilePhoto: json["profilePhoto"],
+        country: Country.fromJson(json["country"]),
+      );
 
-  factory UserProfile.fromJson(Map<String, dynamic> data) {
-    return UserProfile(
-      name: data['name'],
-      surname: data['surname'],
-      //birthDate: data['birthDate'],
-      //gender: data['gender'],
-      //createdAt: data['createdAt'],
-      //user: User.fromJson(data['user']),
-      //country: Country.fromJson(data['country']),
-    );
-  }
   Map<String, dynamic> toJson() => {
+        "userId": userId,
         "name": name,
         "surname": surname,
-        //"locatable": locatable.toJson(),
+        "birthDate": birthDate,
+        "gender": gender,
+        "createdAt": createdAt,
+        //"profilePhoto": profilePhoto,
+        "country": country.toJson(),
       };
 }

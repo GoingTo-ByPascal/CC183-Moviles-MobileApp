@@ -7,14 +7,21 @@ User userFromJson(String str) => User.fromJson(json.decode(str));
 String userToJson(User data) => json.encode(data.toJson());
 
 class User {
+  int id;
   String email;
   String password;
   Wallet? wallet;
 
-  User({this.wallet, required this.email, required this.password});
+  User(
+      {required this.id,
+      this.wallet,
+      required this.email,
+      required this.password});
 
   factory User.fromJson(Map<String, dynamic> data) {
     return User(
+      id: data["id"],
+      wallet: Wallet.fromJson(data['wallet']),
       email: data['email'],
       password: data['password'],
     );
