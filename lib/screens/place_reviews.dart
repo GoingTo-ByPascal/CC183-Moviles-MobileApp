@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:goingto_app/constants/api_path.dart';
 import 'package:goingto_app/models/interactions/review.dart';
 import 'package:goingto_app/utils/bottom_nav_bar.dart';
+import 'package:goingto_app/utils/rating.dart';
 import 'package:http/http.dart' as http;
 
 class PlaceReviews extends StatefulWidget {
@@ -16,9 +17,9 @@ class PlaceReviews extends StatefulWidget {
 
 class _PlaceReviewsState extends State<PlaceReviews> {
   late Future<List> _reviewsFuture;
+  int _rating = 0;
 
   final TextEditingController commentController = TextEditingController();
-  final TextEditingController starsController = TextEditingController();
 
   Future<List> _getReviews() async {
     final response = await http.get(Uri.parse(
@@ -44,7 +45,7 @@ class _PlaceReviewsState extends State<PlaceReviews> {
     var response = await http.post(url,
         body: json.encode({
           "comment": commentController.text,
-          "stars": int.parse(starsController.text),
+          "stars": _rating,
           "reviewedAt": reviewedAt,
         }),
         headers: {
@@ -190,12 +191,11 @@ class _PlaceReviewsState extends State<PlaceReviews> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
-                            child: TextField(
-                              controller: starsController,
-                              decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  hintText: 'Estrellas'),
-                            ),
+                            child: Rating((rating) {
+                              setState(() {
+                                _rating = rating;
+                              });
+                            }, 5),
                           ),
                         ],
                       )),
