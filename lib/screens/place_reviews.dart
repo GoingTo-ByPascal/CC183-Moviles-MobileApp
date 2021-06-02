@@ -120,6 +120,7 @@ class _PlaceReviewsState extends State<PlaceReviews> {
           child: ListTile(
             title: Text(
               review.comment,
+              style: TextStyle(fontSize: 14),
             ),
             subtitle: Text(
               review.userProfile.name + ' ' + review.userProfile.surname,
@@ -128,8 +129,9 @@ class _PlaceReviewsState extends State<PlaceReviews> {
               child: Text(review.userProfile.name.substring(0, 1)),
             ),
             trailing: Container(
-              width: MediaQuery.of(context).size.width * 0.2,
+              width: MediaQuery.of(context).size.width * 0.34,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: _stars(review.stars),
               ),
             ),
@@ -143,7 +145,10 @@ class _PlaceReviewsState extends State<PlaceReviews> {
   List<Widget> _stars(int rating) {
     List<Widget> stars = [];
     for (var i = 0; i < rating; i++) {
-      stars.add(Icon(Icons.star));
+      stars.add(Icon(
+        Icons.star,
+        color: Colors.amber,
+      ));
     }
     return stars;
   }
