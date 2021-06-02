@@ -140,43 +140,46 @@ class _RegisterState extends State<Register> {
 
   Widget _registerButton() {
     return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-            onPrimary: Colors.white,
-            primary: Color(0xffFF5757),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0))),
-        onPressed: () => {
-              print(emailController.text),
-              print(passwordController.text),
-              print(passwordConfirmationController.text),
-              passwordController.text == passwordConfirmationController.text
-                  ? Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Home()))
-                  : showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Center(
-                            child: Card(
-                                child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text('LA CONTRASEÑA NO COINCIDE'),
-                            ElevatedButton(
-                                onPressed: () => {Navigator.pop(context)},
-                                child: Text("ACEPTAR"))
-                          ],
-                        )));
-                      }),
-            },
-        child: SizedBox(
-          width: 200.0,
-          height: 50.0,
-          child: Center(
-            child: Text(
-              'REGISTRARME',
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-        ));
+      style: ElevatedButton.styleFrom(
+          onPrimary: Colors.white,
+          primary: Color(0xffFF5757),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0))),
+      onPressed: () => {
+        print(emailController.text),
+        print(passwordController.text),
+        print(passwordConfirmationController.text),
+        passwordController.text == passwordConfirmationController.text
+            ? {
+                _postUser(),
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Home(
+                              navCoord: 2,
+                            )))
+              }
+            : showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return Center(
+                      child: Card(
+                          child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('LA CONTRASEÑA NO COINCIDE'),
+                      ElevatedButton(
+                          onPressed: () => {Navigator.pop(context)},
+                          child: Text("ACEPTAR"))
+                    ],
+                  )));
+                }),
+      },
+      child: Text(
+        'REGISTRARME',
+        style: TextStyle(fontSize: 18),
+        textAlign: TextAlign.center,
+      ),
+    );
   }
 }

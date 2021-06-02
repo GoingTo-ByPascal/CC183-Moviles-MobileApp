@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:goingto_app/constants/api_path.dart';
-import 'package:goingto_app/models/geographic/locatable.dart';
+import 'package:goingto_app/utils/bottom_nav_bar.dart';
 import 'package:goingto_app/models/geographic/place.dart';
 import 'package:goingto_app/screens/place_reviews.dart';
 import 'package:http/http.dart' as http;
@@ -31,8 +31,10 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
   @override
   Widget build(BuildContext context) {
+    final _bottomNavBar = BottomNavBar(context: context);
     return Scaffold(
       body: _placeView(),
+      bottomNavigationBar: _bottomNavBar.bottomNavBar(),
     );
   }
 

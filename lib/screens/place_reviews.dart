@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:goingto_app/constants/api_path.dart';
 import 'package:goingto_app/models/interactions/review.dart';
+import 'package:goingto_app/utils/bottom_nav_bar.dart';
 import 'package:http/http.dart' as http;
 
 class PlaceReviews extends StatefulWidget {
@@ -61,6 +62,7 @@ class _PlaceReviewsState extends State<PlaceReviews> {
 
   @override
   Widget build(BuildContext context) {
+    final _bottomNavBar = BottomNavBar(context: context);
     return Scaffold(
       body: Column(
         children: [
@@ -85,6 +87,7 @@ class _PlaceReviewsState extends State<PlaceReviews> {
           )
         ],
       ),
+      bottomNavigationBar: _bottomNavBar.bottomNavBar(),
     );
   }
 

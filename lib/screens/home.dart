@@ -7,25 +7,27 @@ import 'package:goingto_app/screens/profile.dart';
 import 'package:flutter/services.dart';
 
 class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
+  final int navCoord;
+  Home({Key? key, required this.navCoord}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  int _selectedIndex = 2;
+  int _selectedIndex = -1;
+
+  @override
+  void initState() {
+    _selectedIndex = widget.navCoord;
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+    super.initState();
+  }
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-  }
-
-  @override
-  void initState() {
-    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
-    super.initState();
   }
 
   navigate() {

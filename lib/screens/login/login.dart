@@ -231,7 +231,11 @@ class _LoginState extends State<Login> {
         onPressed: () => {
               print('Presionaste Iniciar Sesión'),
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Home()))
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Home(
+                            navCoord: 2,
+                          )))
             },
         child: SizedBox(
           width: 200.0,
