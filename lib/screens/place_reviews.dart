@@ -23,13 +23,9 @@ class _PlaceReviewsState extends State<PlaceReviews> {
     final response = await http.get(Uri.parse(
         urlBase + urlLocatables + widget.locatableId.toString() + urlReviews));
     if (response.statusCode == HttpStatus.ok) {
-      print("Hola");
       final _reviewsResponse = json.decode(response.body);
-      print("PRELISTA");
       List _reviews =
           _reviewsResponse.map((map) => Review.fromJson(map)).toList();
-      print("Chao");
-      print(_reviews);
       return _reviews;
     } else {
       throw Exception('Falló');
