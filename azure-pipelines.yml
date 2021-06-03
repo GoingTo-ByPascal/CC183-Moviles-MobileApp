@@ -21,6 +21,7 @@ jobs:
       inputs:
         target: 'apk'
         projectDirectory: '.'
+        buildNumber: '1'
 
     
     - task: CopyFiles@2
