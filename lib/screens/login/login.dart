@@ -1,6 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:goingto_app/constants/api_path.dart';
+import 'package:goingto_app/models/accounts/user.dart';
 import 'package:goingto_app/screens/home.dart';
 import 'package:goingto_app/screens/login/register.dart';
+import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);
@@ -10,6 +16,31 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  late String _tokenSTR;
+  late bool _token = false;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  void _userAuthentication() async {
+    var url = Uri.parse(urlBase + "/users/authenticate");
+    var response = await http.post(url,
+        body: json.encode({
+          "email": emailController.text,
+          "password": passwordController.text,
+        }),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+        });
+    if (response.statusCode == HttpStatus.ok) {
+      final jsonData = json.decode(response.body);
+      _tokenSTR = jsonData["token"];
+      _token = true;
+    } else {
+      _tokenSTR = '';
+      _token = false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: _loginView());
@@ -18,8 +49,6 @@ class _LoginState extends State<Login> {
   Widget _loginView() {
     // Container de toda la página
     return Container(
-      //height: MediaQuery.of(context).size.height,
-      // Fondo azul
       color: Color(0xff3490de),
       child: Column(
         children: [
@@ -127,6 +156,7 @@ class _LoginState extends State<Login> {
           border: Border.all(color: Colors.black),
         ),
         child: TextField(
+          controller: emailController,
           decoration: InputDecoration(
               hintText: "Correo", fillColor: Colors.white, filled: true),
         ));
@@ -140,6 +170,7 @@ class _LoginState extends State<Login> {
         ),
         child: TextField(
           obscureText: true,
+          controller: passwordController,
           decoration: InputDecoration(
               hintText: "Contraseña", fillColor: Colors.white, filled: true),
         ));
@@ -230,12 +261,16 @@ class _LoginState extends State<Login> {
                 borderRadius: BorderRadius.circular(10.0))),
         onPressed: () => {
               print('Presionaste Iniciar Sesión'),
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Home(
-                            navCoord: 2,
-                          )))
+              _userAuthentication(),
+              _token
+                  ? Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Home(
+                                navCoord: 2,
+                              )))
+                  // TODO mensaje de error
+                  : print("no"),
             },
         child: SizedBox(
           width: 200.0,
