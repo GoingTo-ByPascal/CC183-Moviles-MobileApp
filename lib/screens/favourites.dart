@@ -15,6 +15,7 @@ class Favourites extends StatefulWidget {
 
 class _FavouritesState extends State<Favourites> {
   late Future<List> _favouritesFuture;
+  late bool _fav;
 
   Future<List> _getFavourites() async {
     final response =
@@ -29,7 +30,19 @@ class _FavouritesState extends State<Favourites> {
     }
   }
 
-  void _deleteFavourite(int favId) async {
+  void _addFavourite(int favId) async {
+    var url =
+        Uri.parse(urlBase + urlUsers + '1/' + urlLocatables + favId.toString());
+
+    final response = await http.post(url, headers: {
+      HttpHeaders.contentTypeHeader: 'application/json',
+    });
+    print(url);
+    print(response.statusCode);
+    print("AGREGAO");
+  }
+
+  void _removeFavourite(int favId) async {
     final response = await http.delete(
       Uri.parse(urlBase +
           urlUsers +
@@ -47,6 +60,7 @@ class _FavouritesState extends State<Favourites> {
   void initState() {
     super.initState();
     _favouritesFuture = _getFavourites();
+    _fav = true;
   }
 
   @override
@@ -96,8 +110,11 @@ class _FavouritesState extends State<Favourites> {
       favourites.add(
         Card(
           child: ListTile(
-            title: Text(
-              favourite.name,
+            title: InkWell(
+              onTap: () => print(favourite.name),
+              child: Text(
+                favourite.name,
+              ),
             ),
             subtitle: Text(
               favourite.address,
@@ -109,13 +126,22 @@ class _FavouritesState extends State<Favourites> {
               width: MediaQuery.of(context).size.width * 0.2,
               child: InkWell(
                 onTap: () {
-                  print(favourite.id);
-                  _deleteFavourite(favourite.id);
+                  setState(() {
+                    _fav = !_fav;
+                  });
+                  _fav
+                      ? _addFavourite(favourite.id)
+                      : _removeFavourite(favourite.id);
                 },
-                child: Icon(
-                  Icons.favorite,
-                  color: Colors.red,
-                ),
+                child: _fav
+                    ? Icon(
+                        Icons.favorite,
+                        color: Colors.red,
+                      )
+                    : Icon(
+                        Icons.favorite_border,
+                        color: Colors.red,
+                      ),
               ),
             ),
           ),
