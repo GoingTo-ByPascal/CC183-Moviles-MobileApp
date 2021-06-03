@@ -6,8 +6,6 @@
 trigger:
 - main
 
-variables:
-  projectDirectory: sample_project
 
 jobs:
   - job: OS
@@ -18,7 +16,6 @@ jobs:
     - task: FlutterBuild@0
       inputs:
         target: 'ios'
-        projectDirectory: '$(projectDirectory)'
+        projectDirectory: '.'
         buildNumber: '1'
-    
     - task: PublishBuildArtifacts@1
