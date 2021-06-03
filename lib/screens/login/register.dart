@@ -159,6 +159,7 @@ class _RegisterState extends State<Register> {
                               navCoord: 2,
                             )))
               }
+            // TODO Mejor mensaje de error
             : showDialog(
                 context: context,
                 builder: (BuildContext context) {
