@@ -263,17 +263,54 @@ class _LoginState extends State<Login> {
                 borderRadius: BorderRadius.circular(10.0))),
         onPressed: () => {
               print('Presionaste Iniciar Sesión'),
-              _userAuthentication(),
-              _token
-                  ? Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Home(
-                                userId: _userId,
-                                navCoord: 2,
-                              )))
-                  // TODO mensaje de error
-                  : print("no"),
+              if (passwordController.text != '' && emailController.text != '')
+                {
+                  _userAuthentication(),
+                  _token
+                      ? Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Home(
+                                    userId: _userId,
+                                    navCoord: 2,
+                                  )))
+                      // TODO mensaje de error
+                      : showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Center(
+                                child: Card(
+                                    child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                    'Usuario o contraseña incorrectos, vuelva a intentar'),
+                                ElevatedButton(
+                                    onPressed: () => {Navigator.pop(context)},
+                                    child: Text("ACEPTAR"))
+                              ],
+                            )));
+                          })
+                }
+              else
+                {
+                  // TODO Mejor mensaje de error por contraseña diferente
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Center(
+                            child: Card(
+                                child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text('INGRESE TODOS LOS DATOS'),
+                            ElevatedButton(
+                                onPressed: () => {Navigator.pop(context)},
+                                child: Text("ACEPTAR"))
+                          ],
+                        )));
+                      }),
+                },
             },
         child: SizedBox(
           width: 200.0,

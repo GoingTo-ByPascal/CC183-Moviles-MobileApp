@@ -3,40 +3,41 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:goingto_app/constants/api_path.dart';
-import 'package:goingto_app/models/accounts/user.dart';
-import 'package:goingto_app/screens/login/register_profile.dart';
-import '../home.dart';
+import 'package:goingto_app/models/accounts/user_profile.dart';
+import 'package:goingto_app/screens/home.dart';
 import 'package:http/http.dart' as http;
 
-class Register extends StatefulWidget {
+class RegisterProfile extends StatefulWidget {
+  final int userId;
+  RegisterProfile({Key? key, required this.userId}) : super(key: key);
   @override
-  _RegisterState createState() => _RegisterState();
+  _RegisterProfileState createState() => _RegisterProfileState();
 }
 
-class _RegisterState extends State<Register> {
-  late int _userId;
-  late bool _hasId = false;
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController passwordConfirmationController =
-      TextEditingController();
+class _RegisterProfileState extends State<RegisterProfile> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController surnameController = TextEditingController();
+  late bool _created = false;
 
-  void _postUser() async {
-    var url = Uri.parse(urlBase + "/users");
+  void _postUserProfile() async {
+    print("HOLA");
+    String _createdAt = DateTime.now().toString();
+    var url = Uri.parse(urlBase + "/userprofiles");
     var response = await http.post(url,
         body: json.encode({
-          "email": emailController.text,
-          "password": passwordController.text,
+          "userId": widget.userId.toString(),
+          "name": nameController.text,
+          "surname": surnameController.text,
+          "createdAt": _createdAt,
         }),
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
         });
+    print("Luego de request");
     if (response.statusCode == HttpStatus.ok) {
-      final jsonData = json.decode(response.body);
-      _userId = jsonData["id"];
-      _hasId = true;
+      _created = true;
     } else {
-      _hasId = false;
+      _created = false;
     }
   }
 
@@ -78,11 +79,9 @@ class _RegisterState extends State<Register> {
                       child: Container(
                         child: Column(
                           children: [
-                            _userField('Correo'),
+                            _nameField(),
                             SizedBox(height: 30.0),
-                            _passwordField(),
-                            SizedBox(height: 30.0),
-                            _passwordConfirmationField(),
+                            _surnameField(),
                           ],
                         ),
                       ),
@@ -103,46 +102,29 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  Widget _userField(String hint) {
+  Widget _nameField() {
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black),
         ),
         child: TextField(
-          controller: emailController,
+          controller: nameController,
           decoration: InputDecoration(
-              hintText: hint, fillColor: Colors.white, filled: true),
+              hintText: 'Name', fillColor: Colors.white, filled: true),
         ));
   }
 
-  Widget _passwordField() {
+  Widget _surnameField() {
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black),
         ),
         child: TextField(
-          obscureText: true,
-          controller: passwordController,
+          controller: surnameController,
           decoration: InputDecoration(
-              hintText: "Contraseña", fillColor: Colors.white, filled: true),
-        ));
-  }
-
-  Widget _passwordConfirmationField() {
-    return Container(
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-        ),
-        child: TextField(
-          obscureText: true,
-          controller: passwordConfirmationController,
-          decoration: InputDecoration(
-              hintText: "Confirmar Contraseña",
-              fillColor: Colors.white,
-              filled: true),
+              hintText: "Surname", fillColor: Colors.white, filled: true),
         ));
   }
 
@@ -154,20 +136,17 @@ class _RegisterState extends State<Register> {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0))),
       onPressed: () => {
-        print(emailController.text),
-        print(passwordController.text),
-        print(passwordConfirmationController.text),
-        if (passwordController.text == passwordConfirmationController.text &&
-            passwordController.text != '' &&
-            emailController.text != '')
+        if (nameController.text != '' && surnameController.text != '')
           {
-            _postUser(),
-            _hasId
+            _postUserProfile(),
+            print(_created.toString()),
+            _created
                 ? Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => RegisterProfile(
-                              userId: _userId,
+                        builder: (context) => Home(
+                              userId: widget.userId,
+                              navCoord: 2,
                             )))
                 // TODO Mensaje de espera el request
                 : showDialog(
@@ -207,7 +186,7 @@ class _RegisterState extends State<Register> {
           },
       },
       child: Text(
-        'SIGUIENTE',
+        'REGISTRARME',
         style: TextStyle(fontSize: 18),
         textAlign: TextAlign.center,
       ),

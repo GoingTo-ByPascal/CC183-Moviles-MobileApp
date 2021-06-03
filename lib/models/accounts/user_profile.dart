@@ -16,7 +16,7 @@ class UserProfile {
     required this.birthDate,
     required this.gender,
     required this.createdAt,
-    required this.profilePhoto,
+    this.profilePhoto,
     required this.country,
   });
   int id;
@@ -26,7 +26,7 @@ class UserProfile {
   String birthDate;
   String gender;
   String createdAt;
-  String profilePhoto;
+  String? profilePhoto;
   Country? country;
 
   factory UserProfile.fromJson(Map<String, dynamic> json) => UserProfile(
@@ -45,10 +45,10 @@ class UserProfile {
         "userId": userId,
         "name": name,
         "surname": surname,
-        "birthDate": birthDate,
-        "gender": gender,
+        //"birthDate": birthDate,
+        //"gender": gender,
         "createdAt": createdAt,
         //"profilePhoto": profilePhoto,
-        "country": country!.toJson(),
+        //"country": country!.toJson(),
       };
 }
