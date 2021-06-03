@@ -147,7 +147,7 @@ class _PlaceReviewsState extends State<PlaceReviews> {
     for (var i = 0; i < rating; i++) {
       stars.add(Icon(
         Icons.star,
-        color: Colors.amber,
+        color: Colors.orange,
       ));
     }
     return stars;

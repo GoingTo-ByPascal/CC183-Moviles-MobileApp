@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:goingto_app/constants/api_path.dart';
 import 'package:goingto_app/models/accounts/Achievement.dart';
 import 'package:goingto_app/models/accounts/user_profile.dart';
-import 'package:goingto_app/models/interactions/Review.dart';
+import 'package:goingto_app/models/interactions/review.dart';
 import 'package:http/http.dart' as http;
 
 // TODO Arreglar el diseño y agregar badges para que quede bonito
