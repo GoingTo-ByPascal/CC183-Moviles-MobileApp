@@ -18,6 +18,7 @@ class PlaceInfo extends StatefulWidget {
 }
 
 class _PlaceInfoState extends State<PlaceInfo> {
+  late bool _fav;
   void _addFavourite(int favId) async {
     var url =
         Uri.parse(urlBase + urlUsers + '1/' + urlLocatables + favId.toString());
@@ -27,6 +28,28 @@ class _PlaceInfoState extends State<PlaceInfo> {
     });
     print(url);
     print(response.statusCode);
+    print("AGREGAO");
+  }
+
+  void _removeFavourite(int favId) async {
+    final response = await http.delete(
+      Uri.parse(urlBase +
+          urlUsers +
+          '1/' +
+          urlLocatables +
+          'LocatableId?locatableId=' +
+          favId.toString()),
+    );
+
+    print(urlBase + urlUsers + '1/' + urlLocatables + favId.toString());
+    print(response.statusCode);
+    print("BORRAO");
+  }
+
+  @override
+  void initState() {
+    _fav = false;
+    super.initState();
   }
 
   @override
@@ -51,11 +74,23 @@ class _PlaceInfoState extends State<PlaceInfo> {
                   color: Color(0xffFF5757)),
             )),
         InkWell(
-          onTap: () => _addFavourite(widget.place.locatable.id),
-          child: Icon(
-            Icons.favorite,
-            color: Colors.red,
-          ),
+          onTap: () {
+            setState(() {
+              _fav = !_fav;
+            });
+            _fav
+                ? _addFavourite(widget.place.locatable.id)
+                : _removeFavourite(widget.place.locatable.id);
+          },
+          child: _fav
+              ? Icon(
+                  Icons.favorite,
+                  color: Colors.red,
+                )
+              : Icon(
+                  Icons.favorite_border,
+                  color: Colors.red,
+                ),
         ),
         Expanded(
           flex: 35,

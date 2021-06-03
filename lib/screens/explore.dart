@@ -64,7 +64,7 @@ class _ExploreState extends State<Explore> {
           if (snapshot.hasData) {
             print("Good");
             return GridView.count(
-                crossAxisCount: 2, children: _listCountries(snapshot.data));
+                crossAxisCount: 2, children: _listPlaces(snapshot.data));
           } else if (snapshot.hasError) {
             print(snapshot.error);
             return Text("Error");
@@ -75,7 +75,7 @@ class _ExploreState extends State<Explore> {
         });
   }
 
-  List<Widget> _listCountries(data) {
+  List<Widget> _listPlaces(data) {
     List<Widget> places = [];
     for (var place in data) {
       places.add(InkWell(
