@@ -19,7 +19,7 @@ jobs:
     
     - task: FlutterBuild@0
       inputs:
-        target: 'all'
+        target: 'apk'
         projectDirectory: '.'
 
     
