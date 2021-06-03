@@ -10,7 +10,7 @@ trigger:
 jobs:
   - job: Android
     pool:
-      vmImage: 'macOS-10.13'
+      vmImage: 'windows-latest'
     steps:
     - task: FlutterInstall@0
       inputs:
