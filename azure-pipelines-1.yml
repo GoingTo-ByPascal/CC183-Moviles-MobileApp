@@ -6,16 +6,18 @@
 trigger:
 - main
 
-
 jobs:
   - job: OS
     pool:
       vmImage: 'macOS-latest'
     steps:
     - task: FlutterInstall@0
+
     - task: FlutterBuild@0
       inputs:
         target: 'ios'
         projectDirectory: '.'
         buildNumber: '1'
+        iosTargetPlatform: 'simulator'
+        iosCodesign: false
     - task: PublishBuildArtifacts@1
