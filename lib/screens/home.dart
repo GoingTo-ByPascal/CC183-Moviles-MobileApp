@@ -16,7 +16,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _selectedIndex = -1;
-
   @override
   void initState() {
     _selectedIndex = widget.navCoord;
@@ -41,7 +40,8 @@ class _HomeState extends State<Home> {
       case 3:
         return Achievements();
       case 4:
-        return Profile();
+        // TODO Cuando haya auth se envia el actual
+        return Profile(userId: 2);
     }
   }
 
@@ -73,7 +73,7 @@ class _HomeState extends State<Home> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_outlined),
-            label: 'Settings',
+            label: 'Profile',
             backgroundColor: Color(0xff3490de),
           ),
         ],

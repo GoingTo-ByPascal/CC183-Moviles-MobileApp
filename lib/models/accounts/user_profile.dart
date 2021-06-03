@@ -9,6 +9,7 @@ String userProfileToJson(UserProfile data) => json.encode(data.toJson());
 
 class UserProfile {
   UserProfile({
+    required this.id,
     required this.userId,
     required this.name,
     required this.surname,
@@ -18,7 +19,7 @@ class UserProfile {
     required this.profilePhoto,
     required this.country,
   });
-
+  int id;
   int userId;
   String name;
   String surname;
@@ -26,9 +27,10 @@ class UserProfile {
   String gender;
   String createdAt;
   String profilePhoto;
-  Country country;
+  Country? country;
 
   factory UserProfile.fromJson(Map<String, dynamic> json) => UserProfile(
+        id: json["id"],
         userId: json["userId"],
         name: json["name"],
         surname: json["surname"],
@@ -47,6 +49,6 @@ class UserProfile {
         "gender": gender,
         "createdAt": createdAt,
         //"profilePhoto": profilePhoto,
-        "country": country.toJson(),
+        "country": country!.toJson(),
       };
 }

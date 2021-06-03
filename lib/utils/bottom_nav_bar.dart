@@ -33,7 +33,7 @@ class BottomNavBar {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.account_circle_outlined),
-          label: 'Settings',
+          label: 'Profile',
           backgroundColor: Color(0xff3490de),
         ),
       ],

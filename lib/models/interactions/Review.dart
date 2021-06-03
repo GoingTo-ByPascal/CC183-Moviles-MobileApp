@@ -27,7 +27,7 @@ class Review {
       stars: data['stars'],
       //reviewedAt: data['reviewedAt'],
       userProfile: UserProfile.fromJson(data['userProfile']),
-      //locatable: Locatable.fromJson(data['locatable']),
+      locatable: Locatable.fromJson(data['locatable']),
     );
   }
   Map<String, dynamic> toJson() => {
