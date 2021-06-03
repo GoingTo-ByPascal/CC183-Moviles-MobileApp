@@ -10,8 +10,10 @@ import 'package:http/http.dart' as http;
 import 'place_tips.dart';
 
 class PlaceInfo extends StatefulWidget {
+  final int userId;
   final Place place;
-  const PlaceInfo({Key? key, required this.place}) : super(key: key);
+  const PlaceInfo({Key? key, required this.userId, required this.place})
+      : super(key: key);
 
   @override
   _PlaceInfoState createState() => _PlaceInfoState();
@@ -20,8 +22,12 @@ class PlaceInfo extends StatefulWidget {
 class _PlaceInfoState extends State<PlaceInfo> {
   late bool _fav;
   void _addFavourite(int favId) async {
-    var url =
-        Uri.parse(urlBase + urlUsers + '1/' + urlLocatables + favId.toString());
+    var url = Uri.parse(urlBase +
+        urlUsers +
+        widget.userId.toString() +
+        '/' +
+        urlLocatables +
+        favId.toString());
 
     final response = await http.post(url, headers: {
       HttpHeaders.contentTypeHeader: 'application/json',
@@ -35,7 +41,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
     final response = await http.delete(
       Uri.parse(urlBase +
           urlUsers +
-          '1/' +
+          widget.userId.toString() +
+          '/' +
           urlLocatables +
           'LocatableId?locatableId=' +
           favId.toString()),
@@ -54,7 +61,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
   @override
   Widget build(BuildContext context) {
-    final _bottomNavBar = BottomNavBar(context: context);
+    final _bottomNavBar = BottomNavBar(context: context, userId: widget.userId);
     return Scaffold(
       body: _placeView(),
       bottomNavigationBar: _bottomNavBar.bottomNavBar(),
@@ -131,6 +138,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => PlaceTips(
+                              userId: widget.userId,
                               locatableId: widget.place.locatable.id)));
                 },
                 child: Text("TIPS"),
@@ -142,6 +150,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => PlaceReviews(
+                              userId: widget.userId,
                               locatableId: widget.place.locatable.id)));
                 },
                 child: Text("REVIEWS"),

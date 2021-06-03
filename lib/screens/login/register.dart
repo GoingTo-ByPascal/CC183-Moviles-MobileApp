@@ -8,6 +8,8 @@ import '../home.dart';
 import 'package:http/http.dart' as http;
 
 class Register extends StatefulWidget {
+  Register({Key? key}) : super(key: key);
+
   @override
   _RegisterState createState() => _RegisterState();
 }
@@ -29,7 +31,7 @@ class _RegisterState extends State<Register> {
           HttpHeaders.contentTypeHeader: 'application/json',
         });
     final String responseString = response.body;
-    return userFromJson(responseString);
+    return userRegisterFromJson(responseString);
   }
 
   @override
@@ -150,15 +152,7 @@ class _RegisterState extends State<Register> {
         print(passwordController.text),
         print(passwordConfirmationController.text),
         passwordController.text == passwordConfirmationController.text
-            ? {
-                _postUser(),
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Home(
-                              navCoord: 2,
-                            )))
-              }
+            ? {_postUser(), Navigator.pop(context)}
             // TODO Mejor mensaje de error
             : showDialog(
                 context: context,

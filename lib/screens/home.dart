@@ -7,8 +7,10 @@ import 'package:goingto_app/screens/profile.dart';
 import 'package:flutter/services.dart';
 
 class Home extends StatefulWidget {
+  final int userId;
   final int navCoord;
-  Home({Key? key, required this.navCoord}) : super(key: key);
+  Home({Key? key, required this.userId, required this.navCoord})
+      : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
@@ -32,16 +34,16 @@ class _HomeState extends State<Home> {
   navigate() {
     switch (_selectedIndex) {
       case 0:
-        return Explore();
+        return Explore(userId: widget.userId);
       case 1:
-        return Favourites();
+        return Favourites(userId: widget.userId);
       case 2:
         return Search();
       case 3:
-        return Achievements();
+        return Achievements(userId: widget.userId);
       case 4:
         // TODO Cuando haya auth se envia el actual
-        return Profile(userId: 2);
+        return Profile(userId: widget.userId);
     }
   }
 

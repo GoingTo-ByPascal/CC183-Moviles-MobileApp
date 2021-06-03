@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:goingto_app/models/accounts/achievement.dart';
 
 class Achievements extends StatefulWidget {
-  Achievements({Key? key}) : super(key: key);
+  final int userId;
+  Achievements({Key? key, required this.userId}) : super(key: key);
 
   @override
   _AchievementsState createState() => _AchievementsState();
@@ -16,7 +17,8 @@ class _AchievementsState extends State<Achievements> {
   late Future<List> _achievementsFuture;
 
   Future<List> _getAchievements() async {
-    final response = await http.get(Uri.parse(urlBase + urlUserAchievements));
+    final response = await http.get(Uri.parse(
+        urlBase + urlUsers + widget.userId.toString() + urlAchievements));
     if (response.statusCode == HttpStatus.ok) {
       final _achievementsResponse = json.decode(response.body);
       List _achievements = _achievementsResponse

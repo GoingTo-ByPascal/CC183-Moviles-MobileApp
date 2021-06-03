@@ -9,7 +9,9 @@ import 'package:http/http.dart' as http;
 
 class PlaceReviews extends StatefulWidget {
   final int locatableId;
-  PlaceReviews({Key? key, required this.locatableId}) : super(key: key);
+  final int userId;
+  PlaceReviews({Key? key, required this.userId, required this.locatableId})
+      : super(key: key);
 
   @override
   _PlaceReviewsState createState() => _PlaceReviewsState();
@@ -38,7 +40,9 @@ class _PlaceReviewsState extends State<PlaceReviews> {
     String reviewedAt = DateTime.now().toString();
 
     var url = Uri.parse(urlBase +
-        "users/2/" +
+        urlUsers +
+        widget.userId.toString() +
+        "/" +
         urlLocatables +
         widget.locatableId.toString() +
         urlReviews);
@@ -63,7 +67,7 @@ class _PlaceReviewsState extends State<PlaceReviews> {
 
   @override
   Widget build(BuildContext context) {
-    final _bottomNavBar = BottomNavBar(context: context);
+    final _bottomNavBar = BottomNavBar(userId: widget.userId, context: context);
     return Scaffold(
       body: Column(
         children: [

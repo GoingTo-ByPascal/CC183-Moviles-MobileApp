@@ -3,8 +3,10 @@ import 'package:goingto_app/screens/home.dart';
 
 class BottomNavBar {
   BuildContext context;
+  int userId;
 
   BottomNavBar({
+    required this.userId,
     required this.context,
   });
 
@@ -45,7 +47,9 @@ class BottomNavBar {
   }
 
   void _navigate(int index) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => Home(navCoord: index)));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Home(userId: userId, navCoord: index)));
   }
 }

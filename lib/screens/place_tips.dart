@@ -7,8 +7,10 @@ import 'package:goingto_app/utils/bottom_nav_bar.dart';
 import 'package:http/http.dart' as http;
 
 class PlaceTips extends StatefulWidget {
+  final int userId;
   final int locatableId;
-  PlaceTips({Key? key, required this.locatableId}) : super(key: key);
+  PlaceTips({Key? key, required this.userId, required this.locatableId})
+      : super(key: key);
 
   @override
   _PlaceTipsState createState() => _PlaceTipsState();
@@ -33,7 +35,10 @@ class _PlaceTipsState extends State<PlaceTips> {
 
   void _postTip() async {
     var url = Uri.parse(urlBase +
-        "Users/2/Locatables/" +
+        urlUsers +
+        widget.userId.toString() +
+        "/" +
+        urlLocatables +
         widget.locatableId.toString() +
         urlTips);
     var response = await http.post(url,
@@ -53,7 +58,7 @@ class _PlaceTipsState extends State<PlaceTips> {
 
   @override
   Widget build(BuildContext context) {
-    final _bottomNavBar = BottomNavBar(context: context);
+    final _bottomNavBar = BottomNavBar(userId: widget.userId, context: context);
     return Scaffold(
       body: Column(
         children: [

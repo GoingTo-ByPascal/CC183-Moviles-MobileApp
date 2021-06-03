@@ -7,7 +7,8 @@ import 'package:goingto_app/screens/place_info.dart';
 import 'package:http/http.dart' as http;
 
 class Explore extends StatefulWidget {
-  Explore({Key? key}) : super(key: key);
+  final int userId;
+  Explore({Key? key, required this.userId}) : super(key: key);
 
   @override
   _ExploreState createState() => _ExploreState();
@@ -81,8 +82,11 @@ class _ExploreState extends State<Explore> {
       places.add(InkWell(
         onLongPress: () {
           print(place.name);
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => PlaceInfo(place: place)));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      PlaceInfo(userId: widget.userId, place: place)));
         },
         child: Card(
             child: Column(children: [
