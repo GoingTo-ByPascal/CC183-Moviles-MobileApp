@@ -7,7 +7,8 @@ import 'package:goingto_app/models/geographic/locatable.dart';
 import 'package:http/http.dart' as http;
 
 class Favourites extends StatefulWidget {
-  Favourites({Key? key}) : super(key: key);
+  final int userId;
+  Favourites({Key? key, required this.userId}) : super(key: key);
 
   @override
   _FavouritesState createState() => _FavouritesState();
@@ -18,8 +19,8 @@ class _FavouritesState extends State<Favourites> {
   late bool _fav;
 
   Future<List> _getFavourites() async {
-    final response =
-        await http.get(Uri.parse(urlBase + urlUsers + '1/' + urlLocatables));
+    final response = await http.get(Uri.parse(
+        urlBase + urlUsers + widget.userId.toString() + '/' + urlLocatables));
     if (response.statusCode == HttpStatus.ok) {
       final _favouritesResponse = json.decode(response.body);
       List _favourites =
@@ -31,8 +32,12 @@ class _FavouritesState extends State<Favourites> {
   }
 
   void _addFavourite(int favId) async {
-    var url =
-        Uri.parse(urlBase + urlUsers + '1/' + urlLocatables + favId.toString());
+    var url = Uri.parse(urlBase +
+        urlUsers +
+        widget.userId.toString() +
+        '/' +
+        urlLocatables +
+        favId.toString());
 
     final response = await http.post(url, headers: {
       HttpHeaders.contentTypeHeader: 'application/json',
@@ -46,13 +51,13 @@ class _FavouritesState extends State<Favourites> {
     final response = await http.delete(
       Uri.parse(urlBase +
           urlUsers +
-          '1/' +
+          widget.userId.toString() +
+          '/' +
           urlLocatables +
           'LocatableId?locatableId=' +
           favId.toString()),
     );
 
-    print(urlBase + urlUsers + '1/' + urlLocatables + favId.toString());
     print(response.statusCode);
   }
 

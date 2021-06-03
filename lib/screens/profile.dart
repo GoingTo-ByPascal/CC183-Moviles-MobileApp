@@ -39,7 +39,8 @@ class _ProfileState extends State<Profile> {
 
   Future<List> _getUserReviews() async {
     // TODO Chapar el user profile bien para poder leer las reviews
-    var url = Uri.parse(urlBase + "userprofiles/2" + "/reviews");
+    var url = Uri.parse(
+        urlBase + "userprofiles/" + widget.userId.toString() + urlReviews);
     final response = await http.get(url);
     if (response.statusCode == HttpStatus.ok) {
       final _reviewsResponse = json.decode(response.body);
@@ -54,7 +55,7 @@ class _ProfileState extends State<Profile> {
 
   Future<List> _getUserAchievements() async {
     var url = Uri.parse(
-        urlBase + "users/" + widget.userId.toString() + "/achievements");
+        urlBase + "users/" + widget.userId.toString() + urlAchievements);
     final response = await http.get(url);
     if (response.statusCode == HttpStatus.ok) {
       final _achievementsresponse = json.decode(response.body);

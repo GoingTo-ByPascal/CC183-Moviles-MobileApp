@@ -18,6 +18,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   late String _tokenSTR;
   late bool _token = false;
+  late int _userId;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -35,6 +36,7 @@ class _LoginState extends State<Login> {
       final jsonData = json.decode(response.body);
       _tokenSTR = jsonData["token"];
       _token = true;
+      _userId = jsonData["id"];
     } else {
       _tokenSTR = '';
       _token = false;
@@ -267,6 +269,7 @@ class _LoginState extends State<Login> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => Home(
+                                userId: _userId,
                                 navCoord: 2,
                               )))
                   // TODO mensaje de error
