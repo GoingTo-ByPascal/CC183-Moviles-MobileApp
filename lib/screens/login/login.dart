@@ -266,6 +266,7 @@ class _LoginState extends State<Login> {
               if (passwordController.text != '' && emailController.text != '')
                 {
                   _userAuthentication(),
+                  print(_token),
                   _token
                       ? Navigator.push(
                           context,

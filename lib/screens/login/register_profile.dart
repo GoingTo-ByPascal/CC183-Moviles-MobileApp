@@ -20,7 +20,6 @@ class _RegisterProfileState extends State<RegisterProfile> {
   late bool _created = false;
 
   void _postUserProfile() async {
-    print("HOLA");
     String _createdAt = DateTime.now().toString();
     var url = Uri.parse(urlBase + "/userprofiles");
     var response = await http.post(url,
