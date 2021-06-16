@@ -18,4 +18,5 @@ jobs:
         projectDirectory: '.'
         iosCodesign: false    
         iosTargetPlatform: 'simulator'
+        buildNumber: '1'
     - task: PublishBuildArtifacts@1
