@@ -15,5 +15,6 @@ jobs:
     - task: FlutterBuild@0
       inputs:
         target: 'all'
-        projectDirectory: '.'    
+        projectDirectory: '.'
+        iosCodesign: false    
     - task: PublishBuildArtifacts@1
