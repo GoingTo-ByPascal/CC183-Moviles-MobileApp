@@ -20,4 +20,10 @@ jobs:
         buildNumber: '1'
         iosTargetPlatform: 'simulator'
         iosCodesign: false
+    
+    - task: FlutterBuild@0
+      inputs:
+        target: 'apk'
+        projectDirectory: '.'
+        buildNumber: '1'
     - task: PublishBuildArtifacts@1
