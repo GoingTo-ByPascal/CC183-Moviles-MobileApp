@@ -12,18 +12,8 @@ jobs:
       vmImage: 'macOS-latest'
     steps:
     - task: FlutterInstall@0
-
     - task: FlutterBuild@0
       inputs:
-        target: 'ios'
-        projectDirectory: '.'
-        buildNumber: '1'
-        iosTargetPlatform: 'simulator'
-        iosCodesign: false
-    
-    - task: FlutterBuild@0
-      inputs:
-        target: 'apk'
-        projectDirectory: '.'
-        buildNumber: '1'
+        target: 'all'
+        projectDirectory: '.'    
     - task: PublishBuildArtifacts@1
