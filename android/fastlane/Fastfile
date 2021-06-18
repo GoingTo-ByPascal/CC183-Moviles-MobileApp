@@ -20,11 +20,11 @@ platform :android do
   lane :distribute_beta do
       firebase_app_distribution(
           app: "1:465095271141:android:a3a731af961f5e6555ea0c",
-          release_notes: "Primera build de GoingTo, ¿Que esperas para probarla?",
+          release_notes: "Actualización de logo",
           firebase_cli_path: "/usr/local/bin/firebase",
           firebase_cli_token: "1//0hA64-Ag0HiTfCgYIARAAGBESNwF-L9IrJQu5XNgBqE5fpUJNIEcZ9GakZsi24-Qb0RPfEXBs5zHuh_yvm2-oirnA_W3Fhev7L8o",
-          testers: "lporteniu@gmail.com,marioneta03@gmail.com",
-          apk_path: "../build/app/outputs/apk/release/app-release.apk"
+          testers: "lporteniu@gmail.com,marioneta03@gmail.com,facastellanoc@gmail.com",
+          apk_path: "../build/app/outputs/apk/release/app-release.apk",
       )
   end
 end
