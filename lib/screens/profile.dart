@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -22,7 +23,9 @@ class _ProfileState extends State<Profile> {
   late Future<List> _userReviewsFuture;
   late Future<List> _userAchievementsFuture;
   late int _userProfileId;
+  late String _userBirthDate;
   late int _reviewCount = 0;
+  late int _userPoints = 0;
 
   void reviewsLength(lenght) {
     setState(() {
@@ -77,10 +80,13 @@ class _ProfileState extends State<Profile> {
 
   @override
   void initState() {
-    _userProfileFuture = _getUserProfileFuture();
     _userReviewsFuture = _getUserReviews();
     _userAchievementsFuture = _getUserAchievements();
+    _userProfileFuture = _getUserProfileFuture();
     super.initState();
+    new Timer(Duration(milliseconds: 900), () {
+      setState(() {});
+    });
   }
 
   @override
@@ -101,7 +107,7 @@ class _ProfileState extends State<Profile> {
             _buildUserProfile(),
             Row(mainAxisSize: MainAxisSize.min, children: [
               Text("Reviews $_reviewCount"),
-              Text(" Puntos:{getUserPoints}")
+              Text("Points:$_userPoints")
             ]),
             Expanded(flex: 1, child: _buildUserAchievements()),
             Expanded(flex: 1, child: _buildUserReviews())
@@ -169,7 +175,8 @@ class _ProfileState extends State<Profile> {
   List<Widget> _achievementList(data) {
     List<Widget> _achievements = [];
     for (var achievement in data) {
-      _achievements.add(Card(child: Text(achievement.name)));
+      _achievements.add(Card(child: Center(child: Text(achievement.name))));
+      _userPoints = achievement.points;
     }
     return _achievements;
   }
