@@ -18,35 +18,34 @@ class Search extends StatefulWidget {
 
 class _SearchState extends State<Search> {
   final nameController = TextEditingController();
-  List<Country> countries = [];
-  List<City> cities = [];
   City? selectedcity;
   String? selectedcategory;
   Country? selectedcountry;
 
-  _getCountries() async {
+  //metodo 2
+  late Future<List> _countriesFuture;
+  late Future<List>? _citiesFuture;
+
+  Future<List> _getCountries() async {
     final response = await http.get(Uri.parse(urlBase + "countries"));
     if (response.statusCode == HttpStatus.ok) {
       final _countriesResponse = json.decode(response.body);
       List _countries =
           _countriesResponse.map((map) => Country.fromJson(map)).toList();
-      for (var country in _countries) {
-        countries.add(country);
-      }
+      return _countries;
     } else {
       throw Exception("Falló");
     }
   }
 
-  _getCities() async {
+  Future<List> _getCities() async {
     final response = await http.get(
         Uri.parse(urlBase + "countries/${this.selectedcountry?.id}/cities"));
     if (response.statusCode == HttpStatus.ok) {
       final _citiesResponse = json.decode(response.body);
       List _cities = _citiesResponse.map((map) => City.fromJson(map)).toList();
-      for (var city in _cities) {
-        cities.add(city);
-      }
+
+      return _cities;
     } else {
       throw Exception("Falló");
     }
@@ -54,7 +53,8 @@ class _SearchState extends State<Search> {
 
   @override
   void initState() {
-    _getCountries();
+    _countriesFuture = _getCountries();
+    _citiesFuture = null;
     super.initState();
   }
 
@@ -82,17 +82,15 @@ class _SearchState extends State<Search> {
         Padding(
             padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
             child: Text(
-              'Filter my search ${this.countries.length}',
+              'Filter my search ${selectedcountry?.fullName}',
               style: TextStyle(fontSize: 15.0, color: Colors.black),
             )),
         Padding(
-            padding: const EdgeInsets.only(top: 30.0), child: _filtercountry()),
+            padding: const EdgeInsets.only(top: 30.0),
+            child: _buildCountries()),
         Padding(
             padding: const EdgeInsets.only(top: 50.0, bottom: 40.0),
-            child: _filtercity()),
-        Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: _filtercategory()),
+            child: _buildCities()),
         ElevatedButton(
           style: ElevatedButton.styleFrom(primary: Color(0xff34D939)),
           onPressed: () {
@@ -120,84 +118,111 @@ class _SearchState extends State<Search> {
         ));
   }
 
-  Widget _filtercountry() {
-    return DropdownButton<Country>(
-      hint: Text("Choose a country"),
-      icon: const Icon(Icons.arrow_downward),
-      iconSize: 24,
-      elevation: 16,
-      value: selectedcountry,
-      onChanged: (newValue) {
-        setState(() {
-          selectedcountry = newValue;
+  Widget _buildCountries() {
+    return FutureBuilder(
+        future: _countriesFuture,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print("Good");
+            return DropdownButton<Country>(
+              hint: Text("Choose a country"),
+              icon: const Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              value: selectedcountry,
+              onChanged: (newValue) {
+                setState(() {
+                  selectedcountry = newValue;
+                });
+                _citiesFuture = _getCities();
+              },
+              style: const TextStyle(color: Colors.deepPurple),
+              underline: Container(
+                height: 2,
+                color: Colors.deepPurpleAccent,
+              ),
+              items: _listCountries(snapshot.data).toList(),
+            );
+          } else if (snapshot.hasError) {
+            print(snapshot.error);
+            return Text("Error");
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         });
-        _getCities();
-      },
-      style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
-      items: this.countries.map((Country value) {
-        return DropdownMenuItem<Country>(
-          value: value,
-          child: Text(value.fullName),
-        );
-      }).toList(),
-    );
   }
 
-  Widget _filtercity() {
-    return DropdownButton<City>(
-      hint: Text("Choose a city"),
-      icon: const Icon(Icons.arrow_downward),
-      iconSize: 24,
-      elevation: 16,
-      value: selectedcity,
-      onChanged: (City? newValue) {
-        setState(() {
-          selectedcity = newValue;
-        });
-      },
-      style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
-      items: this.cities.map((City value) {
-        return DropdownMenuItem(
-          value: value,
-          child: Text(value.name),
-        );
-      }).toList(),
-    );
+  List<DropdownMenuItem<Country>> _listCountries(data) {
+    List<DropdownMenuItem<Country>> countries = [];
+    for (var country in data) {
+      countries.add(DropdownMenuItem<Country>(
+          value: country, child: Text(country.fullName)));
+    }
+    return countries;
   }
 
-  Widget _filtercategory() {
-    return DropdownButton<String>(
-      hint: Text("Choose a category"),
-      icon: const Icon(Icons.arrow_downward),
-      iconSize: 24,
-      elevation: 16,
-      value: selectedcategory,
-      onChanged: (newValue) {
-        setState(() {
-          selectedcategory = newValue;
+  Widget _buildCities() {
+    return FutureBuilder(
+        future: _citiesFuture,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print("Good");
+            return DropdownButton<City>(
+              hint: Text("Choose a city"),
+              icon: const Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              value: selectedcity,
+              onChanged: (newValue) {
+                setState(() {
+                  selectedcity = newValue;
+                });
+              },
+              style: const TextStyle(color: Colors.deepPurple),
+              underline: Container(
+                height: 2,
+                color: Colors.deepPurpleAccent,
+              ),
+              items: _listCities(snapshot.data).toList(),
+            );
+          } else if (snapshot.hasError) {
+            print(snapshot.error);
+            return Text("Error");
+          }
+          return DropdownButton<String>(
+            hint: Text("Choose a city"),
+            value: selectedcategory,
+            icon: const Icon(Icons.arrow_downward),
+            iconSize: 24,
+            elevation: 16,
+            style: const TextStyle(color: Colors.deepPurple),
+            underline: Container(
+              height: 2,
+              color: Colors.deepPurpleAccent,
+            ),
+            onChanged: (String? newValue) {
+              setState(() {
+                selectedcategory = newValue!;
+              });
+            },
+            items: <String>['Choose a country first!']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          );
         });
-      },
-      style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
-      items: <String>['One', 'Two', 'Free', 'Foury']
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
+  }
+
+  List<DropdownMenuItem<City>> _listCities(data) {
+    List<DropdownMenuItem<City>> cities = [];
+    for (var city in data) {
+      cities.add(DropdownMenuItem<City>(value: city, child: Text(city.name)));
+    }
+    return cities;
   }
 
   void _search() {
