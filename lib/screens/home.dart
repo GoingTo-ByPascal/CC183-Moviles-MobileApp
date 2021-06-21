@@ -38,7 +38,9 @@ class _HomeState extends State<Home> {
       case 1:
         return Favourites(userId: widget.userId);
       case 2:
-        return Search();
+        return Search(
+          userId: widget.userId,
+        );
       case 3:
         return Achievements(userId: widget.userId);
       case 4:
