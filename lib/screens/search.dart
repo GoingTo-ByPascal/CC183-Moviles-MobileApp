@@ -67,38 +67,40 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      children: [
-        Padding(
-            padding: const EdgeInsets.only(top: 70.0, bottom: 20.0),
-            child: _searchByName()),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(primary: Color(0xff34D939)),
-          onPressed: () {
-            _search();
-          },
-          child: Text("Search"),
-        ),
-        Padding(
-            padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-            child: Text(
-              'Filter my search ${selectedcountry?.fullName}',
-              style: TextStyle(fontSize: 15.0, color: Colors.black),
-            )),
-        Padding(
-            padding: const EdgeInsets.only(top: 30.0),
-            child: _buildCountries()),
-        Padding(
-            padding: const EdgeInsets.only(top: 50.0, bottom: 40.0),
-            child: _buildCities()),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(primary: Color(0xff34D939)),
-          onPressed: () {
-            _filter();
-          },
-          child: Text("Filter"),
-        ),
-      ],
+        body: SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+              padding: const EdgeInsets.only(top: 70.0, bottom: 20.0),
+              child: _searchByName()),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(primary: Color(0xff34D939)),
+            onPressed: () {
+              _search();
+            },
+            child: Text("Search"),
+          ),
+          Padding(
+              padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+              child: Text(
+                'Filter my search ${selectedcountry?.fullName}',
+                style: TextStyle(fontSize: 15.0, color: Colors.black),
+              )),
+          Padding(
+              padding: const EdgeInsets.only(top: 30.0),
+              child: _buildCountries()),
+          Padding(
+              padding: const EdgeInsets.only(top: 50.0, bottom: 40.0),
+              child: _buildCities()),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(primary: Color(0xff34D939)),
+            onPressed: () {
+              _filter();
+            },
+            child: Text("Filter"),
+          ),
+        ],
+      ),
     ));
   }
 
