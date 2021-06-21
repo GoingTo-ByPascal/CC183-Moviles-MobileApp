@@ -52,6 +52,7 @@ class _ProfileState extends State<Profile> {
       final _reviewsResponse = json.decode(response.body);
       List _reviews =
           _reviewsResponse.map((map) => Review.fromJson(map)).toList();
+      _reviewCount = _reviews.length;
       return _reviews;
     } else {
       throw Exception(
@@ -176,12 +177,23 @@ class _ProfileState extends State<Profile> {
   List<Widget> _reviewList(data) {
     List<Widget> _reviews = [];
     for (var review in data) {
-      _reviews.add(Card(
-          child: Column(
-              children: [Text(review.locatable.name), Text(review.comment)])));
+      _reviews.add(
+        Card(
+          child: ListTile(
+            title: Text(
+              review.comment,
+              style: TextStyle(fontSize: 14),
+            ),
+            subtitle: Text(
+              review.locatable.name,
+            ),
+            trailing: Container(
+              width: MediaQuery.of(context).size.width * 0.34,
+            ),
+          ),
+        ),
+      );
     }
-    //reviewsLength(_reviews.length);
-    _reviewCount = _reviews.length;
     return _reviews;
   }
 }
