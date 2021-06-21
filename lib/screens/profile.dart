@@ -24,6 +24,12 @@ class _ProfileState extends State<Profile> {
   late int _userProfileId;
   late int _reviewCount = 0;
 
+  void reviewsLength(lenght) {
+    setState(() {
+      _reviewCount = lenght;
+    });
+  }
+
   Future<UserProfile> _getUserProfileFuture() async {
     // TODO agregar userprofiles/ como constante
     var url = Uri.parse(urlBase + "userprofiles/" + widget.userId.toString());
@@ -171,10 +177,10 @@ class _ProfileState extends State<Profile> {
     List<Widget> _reviews = [];
     for (var review in data) {
       _reviews.add(Card(
-          child: Column(children: [
-        Text(review.locatable.name),
-      ])));
+          child: Column(
+              children: [Text(review.locatable.name), Text(review.comment)])));
     }
+    //reviewsLength(_reviews.length);
     _reviewCount = _reviews.length;
     return _reviews;
   }

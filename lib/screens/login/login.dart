@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -22,25 +23,50 @@ class _LoginState extends State<Login> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  void _userAuthentication() async {
+  void _userAuthentication() {
     var url = Uri.parse(urlBase + "/users/authenticate");
-    var response = await http.post(url,
+    http.post(url,
         body: json.encode({
           "email": emailController.text,
           "password": passwordController.text,
         }),
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
-        });
-    if (response.statusCode == HttpStatus.ok) {
-      final jsonData = json.decode(response.body);
-      _tokenSTR = jsonData["token"];
-      _token = true;
-      _userId = jsonData["id"];
-    } else {
-      _tokenSTR = '';
-      _token = false;
-    }
+        }).then((response) {
+      if (response.statusCode == HttpStatus.ok) {
+        final jsonData = json.decode(response.body);
+        _tokenSTR = jsonData["token"];
+        _token = true;
+        _userId = jsonData["id"];
+      } else {
+        _tokenSTR = '';
+        _token = false;
+      }
+      _token
+          ? Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Home(
+                        userId: _userId,
+                        navCoord: 2,
+                      )))
+          // TODO mensaje de error
+          : showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Center(
+                    child: Card(
+                        child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Usuario o contraseña incorrectos, vuelva a intentar'),
+                    ElevatedButton(
+                        onPressed: () => {Navigator.pop(context)},
+                        child: Text("ACEPTAR"))
+                  ],
+                )));
+              });
+    });
   }
 
   @override
@@ -266,32 +292,6 @@ class _LoginState extends State<Login> {
               if (passwordController.text != '' && emailController.text != '')
                 {
                   _userAuthentication(),
-                  print(_token),
-                  _token
-                      ? Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Home(
-                                    userId: _userId,
-                                    navCoord: 2,
-                                  )))
-                      // TODO mensaje de error
-                      : showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Center(
-                                child: Card(
-                                    child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                    'Usuario o contraseña incorrectos, vuelva a intentar'),
-                                ElevatedButton(
-                                    onPressed: () => {Navigator.pop(context)},
-                                    child: Text("ACEPTAR"))
-                              ],
-                            )));
-                          })
                 }
               else
                 {
