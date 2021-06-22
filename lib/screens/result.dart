@@ -67,7 +67,7 @@ class _ResultState extends State<Result> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             print("Good");
-            return onePlace(snapshot.data);
+            return Center(child: onePlace(snapshot.data));
           } else if (snapshot.hasError) {
             print(snapshot.error);
             return Text("Error");

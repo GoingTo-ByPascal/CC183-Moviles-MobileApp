@@ -228,22 +228,26 @@ class _SearchState extends State<Search> {
   }
 
   void _search() {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Result(
-                  userId: widget.userId,
-                  namePlace: this.nameController.text,
-                )));
+    if (this.nameController.text != "") {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Result(
+                    userId: widget.userId,
+                    namePlace: this.nameController.text,
+                  )));
+    }
   }
 
   void _filter() {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Results(
-                  userId: widget.userId,
-                  cityId: this.selectedcity?.id,
-                )));
+    if (this.selectedcity != null) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Results(
+                    userId: widget.userId,
+                    cityId: this.selectedcity?.id,
+                  )));
+    }
   }
 }
