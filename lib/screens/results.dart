@@ -5,6 +5,7 @@ import 'package:goingto_app/constants/api_path.dart';
 import 'package:goingto_app/models/geographic/City.dart';
 import 'package:goingto_app/models/geographic/place.dart';
 import 'package:goingto_app/screens/place_info.dart';
+import 'package:goingto_app/utils/bottom_nav_bar.dart';
 import 'package:http/http.dart' as http;
 
 class Results extends StatefulWidget {
@@ -39,7 +40,11 @@ class _ResultsState extends State<Results> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: _exploreView());
+    final _bottomNavBar = BottomNavBar(userId: widget.userId, context: context);
+    return Scaffold(
+      body: _exploreView(),
+      bottomNavigationBar: _bottomNavBar.bottomNavBar(),
+    );
   }
 
   Widget _exploreView() {
