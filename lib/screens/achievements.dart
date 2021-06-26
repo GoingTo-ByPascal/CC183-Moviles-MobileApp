@@ -86,7 +86,11 @@ class _AchievementsState extends State<Achievements> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Image.network(achievement.badge)),
+              Padding(
+                padding:
+                    const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
                 child: Text(achievement.name,
                     style: TextStyle(fontWeight: FontWeight.bold)),
               ),

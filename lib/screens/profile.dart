@@ -84,7 +84,7 @@ class _ProfileState extends State<Profile> {
     _userAchievementsFuture = _getUserAchievements();
     _userProfileFuture = _getUserProfileFuture();
     super.initState();
-    new Timer(Duration(milliseconds: 900), () {
+    new Timer(Duration(milliseconds: 1050), () {
       setState(() {});
     });
   }
@@ -92,26 +92,29 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  maxRadius: 60,
-                  foregroundImage: AssetImage('assets/guys.jpg'),
+      body: Container(
+        decoration: BoxDecoration(color: Color(0xffD7D7D7)),
+        child: Center(
+          child: Column(
+            children: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CircleAvatar(
+                    maxRadius: 60,
+                    foregroundImage: AssetImage('assets/guys.jpg'),
+                  ),
                 ),
               ),
-            ),
-            _buildUserProfile(),
-            Row(mainAxisSize: MainAxisSize.min, children: [
-              Text("Reviews $_reviewCount"),
-              Text("Points:$_userPoints")
-            ]),
-            Expanded(flex: 1, child: _buildUserAchievements()),
-            Expanded(flex: 1, child: _buildUserReviews())
-          ],
+              _buildUserProfile(),
+              Row(mainAxisSize: MainAxisSize.min, children: [
+                Text("Reviews $_reviewCount"),
+                Text("Points:$_userPoints")
+              ]),
+              Expanded(flex: 1, child: _buildUserAchievements()),
+              Expanded(flex: 1, child: _buildUserReviews())
+            ],
+          ),
         ),
       ),
     );
@@ -175,7 +178,7 @@ class _ProfileState extends State<Profile> {
   List<Widget> _achievementList(data) {
     List<Widget> _achievements = [];
     for (var achievement in data) {
-      _achievements.add(Card(child: Center(child: Text(achievement.name))));
+      _achievements.add(Image.network(achievement.badge));
       _userPoints = achievement.points;
     }
     return _achievements;
