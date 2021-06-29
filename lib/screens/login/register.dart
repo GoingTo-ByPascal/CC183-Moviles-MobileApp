@@ -16,28 +16,54 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   late int _userId;
   late bool _hasId = false;
+  late bool _created = false;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController passwordConfirmationController =
       TextEditingController();
-
-  void _postUser() async {
+/*"email": emailController.text,
+          "password": passwordController.text, */
+  void _postUser() {
     var url = Uri.parse(urlBase + "/users");
-    var response = await http.post(url,
+    http.post(url,
         body: json.encode({
           "email": emailController.text,
           "password": passwordController.text,
         }),
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
-        });
-    if (response.statusCode == HttpStatus.ok) {
-      final jsonData = json.decode(response.body);
-      _userId = jsonData["id"];
-      _hasId = true;
-    } else {
-      _hasId = false;
-    }
+        }).then((response) {
+      print("Luego de request");
+      if (response.statusCode == HttpStatus.ok) {
+        _created = true;
+      } else {
+        _created = false;
+      }
+      _created
+          ? Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Home(
+                        userId: widget.userId,
+                        navCoord: 2,
+                      )))
+          // TODO Mensaje de espera el request
+          : showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Center(
+                    child: Card(
+                        child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Espere unos segundos por favor...'),
+                    ElevatedButton(
+                        onPressed: () => {Navigator.pop(context)},
+                        child: Text("ACEPTAR"))
+                  ],
+                )));
+              });
+    });
   }
 
   @override

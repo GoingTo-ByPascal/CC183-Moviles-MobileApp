@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:goingto_app/constants/api_path.dart';
 import 'package:goingto_app/models/accounts/user_profile.dart';
+import 'package:goingto_app/models/geographic/Country.dart';
 import 'package:goingto_app/screens/home.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,34 +19,85 @@ class _RegisterProfileState extends State<RegisterProfile> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController surnameController = TextEditingController();
   late bool _created = false;
+  DateTime? _selectedDate;
+  Country? selectedcountry;
+  String? selectedgender;
+  late Future<List> _countriesFuture;
 
-  void _postUserProfile() async {
+  Future<List> _getCountries() async {
+    final response = await http.get(Uri.parse(urlBase + "countries"));
+    if (response.statusCode == HttpStatus.ok) {
+      final _countriesResponse = json.decode(response.body);
+      List _countries =
+          _countriesResponse.map((map) => Country.fromJson(map)).toList();
+      return _countries;
+    } else {
+      throw Exception("Falló");
+    }
+  }
+
+  void _postUserProfile() {
     String _createdAt = DateTime.now().toString();
+    DateTime datito = new DateTime(
+        _selectedDate!.year, _selectedDate!.month, _selectedDate!.day);
     var url = Uri.parse(urlBase + "/userprofiles");
-    var response = await http.post(url,
+    http.post(url,
         body: json.encode({
-          "userId": widget.userId.toString(),
+          "userId": widget.userId,
           "name": nameController.text,
           "surname": surnameController.text,
-          "createdAt": _createdAt,
+          "birthDate": datito.toString(),
+          "gender": selectedgender,
+          "countryId": selectedcountry?.id,
         }),
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
-        });
-    print("Luego de request");
-    if (response.statusCode == HttpStatus.ok) {
-      _created = true;
-    } else {
-      _created = false;
-    }
+        }).then((response) {
+      print("Luego de request");
+      if (response.statusCode == HttpStatus.ok) {
+        _created = true;
+      } else {
+        _created = false;
+      }
+      _created
+          ? Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Home(
+                        userId: widget.userId,
+                        navCoord: 2,
+                      )))
+          // TODO Mensaje de espera el request
+          : showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Center(
+                    child: Card(
+                        child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Espere unos segundos por favor...'),
+                    ElevatedButton(
+                        onPressed: () => {Navigator.pop(context)},
+                        child: Text("ACEPTAR"))
+                  ],
+                )));
+              });
+    });
+  }
+
+  @override
+  void initState() {
+    _countriesFuture = _getCountries();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: _registerView());
+    return Scaffold(body: _registerView(context));
   }
 
-  Widget _registerView() {
+  Widget _registerView(BuildContext context) {
     return Container(
       color: Color(0xff3490de),
       child: Column(
@@ -80,7 +132,15 @@ class _RegisterProfileState extends State<RegisterProfile> {
                           children: [
                             _nameField(),
                             SizedBox(height: 30.0),
-                            _surnameField(),
+                            _surnameField(context),
+                            SizedBox(height: 30.0),
+                            Text("Birthday: "),
+                            SizedBox(height: 10.0),
+                            _dateButton(context),
+                            SizedBox(height: 30.0),
+                            _buildgenders(),
+                            SizedBox(height: 30.0),
+                            _buildCountries(),
                           ],
                         ),
                       ),
@@ -114,7 +174,7 @@ class _RegisterProfileState extends State<RegisterProfile> {
         ));
   }
 
-  Widget _surnameField() {
+  Widget _surnameField(BuildContext context) {
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         decoration: BoxDecoration(
@@ -125,6 +185,25 @@ class _RegisterProfileState extends State<RegisterProfile> {
           decoration: InputDecoration(
               hintText: "Surname", fillColor: Colors.white, filled: true),
         ));
+  }
+
+  Widget _dateButton(context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(primary: Colors.deepPurpleAccent),
+      child: Text("Choose a date"),
+      onPressed: () {
+        showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(1950),
+                lastDate: DateTime.now())
+            .then((date) {
+          setState(() {
+            _selectedDate = date;
+          });
+        });
+      },
+    );
   }
 
   Widget _registerButton() {
@@ -139,30 +218,6 @@ class _RegisterProfileState extends State<RegisterProfile> {
           {
             _postUserProfile(),
             print(_created.toString()),
-            _created
-                ? Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Home(
-                              userId: widget.userId,
-                              navCoord: 2,
-                            )))
-                // TODO Mensaje de espera el request
-                : showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Center(
-                          child: Card(
-                              child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text('Espere unos segundos por favor...'),
-                          ElevatedButton(
-                              onPressed: () => {Navigator.pop(context)},
-                              child: Text("ACEPTAR"))
-                        ],
-                      )));
-                    })
           }
         else
           {
@@ -189,6 +244,76 @@ class _RegisterProfileState extends State<RegisterProfile> {
         style: TextStyle(fontSize: 18),
         textAlign: TextAlign.center,
       ),
+    );
+  }
+
+  Widget _buildCountries() {
+    return FutureBuilder(
+        future: _countriesFuture,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print("Good");
+            return DropdownButton<Country>(
+              hint: Text("Choose a country"),
+              icon: const Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              value: selectedcountry,
+              onChanged: (newValue) {
+                setState(() {
+                  selectedcountry = newValue;
+                });
+              },
+              style: const TextStyle(color: Colors.deepPurple),
+              underline: Container(
+                height: 2,
+                color: Colors.deepPurpleAccent,
+              ),
+              items: _listCountries(snapshot.data).toList(),
+            );
+          } else if (snapshot.hasError) {
+            print(snapshot.error);
+            return Text("Error");
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        });
+  }
+
+  List<DropdownMenuItem<Country>> _listCountries(data) {
+    List<DropdownMenuItem<Country>> countries = [];
+    for (var country in data) {
+      countries.add(DropdownMenuItem<Country>(
+          value: country, child: Text(country.fullName)));
+    }
+    return countries;
+  }
+
+  Widget _buildgenders() {
+    return DropdownButton<String>(
+      value: selectedgender,
+      hint: Text("Choose a gender"),
+      icon: const Icon(Icons.arrow_downward),
+      iconSize: 24,
+      elevation: 16,
+      style: const TextStyle(color: Colors.deepPurple),
+      underline: Container(
+        height: 2,
+        color: Colors.deepPurpleAccent,
+      ),
+      onChanged: (String? newValue) {
+        setState(() {
+          selectedgender = newValue!;
+        });
+      },
+      items: <String>['Male', 'Female']
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 }
