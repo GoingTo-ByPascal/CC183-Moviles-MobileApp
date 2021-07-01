@@ -16,7 +16,6 @@ jobs:
       inputs:
         target: 'all'
         projectDirectory: '.'
-        iosCodesign: false    
-        iosTargetPlatform: 'simulator'
         buildNumber: '1'
+        additionalArguments: '--no-sound-null-safety'
     - task: PublishBuildArtifacts@1
