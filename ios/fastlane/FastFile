@@ -1,0 +1,13 @@
+platform :ios do
+    desc "My awesome app"
+    lane :distribute_beta do
+        firebase_app_distribution(
+            app: "1:465095271141:ios:5e4d1f0fbc9eab6a55ea0c",
+            testers: "lporteniu@gmail.com,marioneta03@gmail.com",
+            release_notes: "Lots of amazing new features to test out!",
+            firebase_cli_path: "/usr/local/bin/firebase",
+            firebase_cli_token: "1//0hA64-Ag0HiTfCgYIARAAGBESNwF-L9IrJQu5XNgBqE5fpUJNIEcZ9GakZsi24-Qb0RPfEXBs5zHuh_yvm2-oirnA_W3Fhev7L8o",
+            ipa_path:"../build/app/outputs/apk/release/app-release.ipa"
+        )
+    end
+end
