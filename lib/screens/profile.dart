@@ -93,7 +93,6 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(color: Color(0xffD7D7D7)),
         child: Center(
           child: Column(
             children: [
