@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:goingto_app/models/geographic/Country.dart';
 import 'package:goingto_app/models/geographic/City.dart';
@@ -19,6 +20,7 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   final nameController = TextEditingController();
   City? selectedcity;
+  final FirebaseAnalytics _firebaseAnalytics = FirebaseAnalytics();
   String? selectedcategory;
   Country? selectedcountry;
 
@@ -55,6 +57,7 @@ class _SearchState extends State<Search> {
   void initState() {
     _countriesFuture = _getCountries();
     _citiesFuture = null;
+    _firebaseAnalytics.setCurrentScreen(screenName: 'Search');
     super.initState();
   }
 

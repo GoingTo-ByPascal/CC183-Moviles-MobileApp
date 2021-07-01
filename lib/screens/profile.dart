@@ -8,12 +8,12 @@ import 'package:goingto_app/models/accounts/Achievement.dart';
 import 'package:goingto_app/models/accounts/user_profile.dart';
 import 'package:goingto_app/models/interactions/review.dart';
 import 'package:http/http.dart' as http;
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 // TODO Arreglar el diseño y agregar badges para que quede bonito
 class Profile extends StatefulWidget {
   final int userId;
   Profile({Key? key, required this.userId}) : super(key: key);
-
   @override
   _ProfileState createState() => _ProfileState();
 }
@@ -24,9 +24,9 @@ class _ProfileState extends State<Profile> {
   late Future<List> _userAchievementsFuture;
   late int _userProfileId;
   late String _userBirthDate;
+  final FirebaseAnalytics _firebaseAnalytics = FirebaseAnalytics();
   late int _reviewCount = 0;
   late int _userPoints = 0;
-
   void reviewsLength(lenght) {
     setState(() {
       _reviewCount = lenght;
@@ -83,6 +83,9 @@ class _ProfileState extends State<Profile> {
     _userReviewsFuture = _getUserReviews();
     _userAchievementsFuture = _getUserAchievements();
     _userProfileFuture = _getUserProfileFuture();
+    _firebaseAnalytics.setCurrentScreen(screenName: 'Profile');
+    _firebaseAnalytics.logEvent(
+        name: 'Enter to profile', parameters: {'userId': widget.userId});
     super.initState();
     new Timer(Duration(milliseconds: 1050), () {
       setState(() {});
@@ -111,7 +114,7 @@ class _ProfileState extends State<Profile> {
                 Text("Points:$_userPoints")
               ]),
               Expanded(flex: 1, child: _buildUserAchievements()),
-              Expanded(flex: 1, child: _buildUserReviews())
+              Expanded(flex: 1, child: _buildUserReviews()),
             ],
           ),
         ),

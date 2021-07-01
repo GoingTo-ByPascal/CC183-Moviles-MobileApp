@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:goingto_app/constants/api_path.dart';
 import 'package:goingto_app/utils/bottom_nav_bar.dart';
@@ -21,6 +22,7 @@ class PlaceInfo extends StatefulWidget {
 
 class _PlaceInfoState extends State<PlaceInfo> {
   late bool _fav;
+  final FirebaseAnalytics _firebaseAnalytics = FirebaseAnalytics();
   void _addFavourite(int favId) async {
     var url = Uri.parse(urlBase +
         urlUsers +
@@ -56,6 +58,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
   @override
   void initState() {
     _fav = false;
+    _firebaseAnalytics.setCurrentScreen(screenName: 'place/info');
     super.initState();
   }
 

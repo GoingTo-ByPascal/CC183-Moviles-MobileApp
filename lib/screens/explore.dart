@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:goingto_app/constants/api_path.dart';
 import 'package:goingto_app/models/geographic/place.dart';
@@ -16,7 +17,7 @@ class Explore extends StatefulWidget {
 
 class _ExploreState extends State<Explore> {
   late Future<List> _placesFuture;
-
+  final FirebaseAnalytics _firebaseAnalytics = FirebaseAnalytics();
   Future<List> _getPlaces() async {
     final response = await http.get(Uri.parse(urlBase + urlPlaces));
     if (response.statusCode == HttpStatus.ok) {
@@ -31,6 +32,7 @@ class _ExploreState extends State<Explore> {
   @override
   void initState() {
     _placesFuture = _getPlaces();
+    _firebaseAnalytics.setCurrentScreen(screenName: 'Explore');
     super.initState();
   }
 

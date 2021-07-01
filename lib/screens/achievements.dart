@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:goingto_app/constants/api_path.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class Achievements extends StatefulWidget {
 
 class _AchievementsState extends State<Achievements> {
   late Future<List> _achievementsFuture;
-
+  final FirebaseAnalytics _firebaseAnalytics = FirebaseAnalytics();
   Future<List> _getAchievements() async {
     final response = await http.get(Uri.parse(
         urlBase + urlUsers + widget.userId.toString() + urlAchievements));
@@ -24,6 +25,9 @@ class _AchievementsState extends State<Achievements> {
       List _achievements = _achievementsResponse
           .map((map) => Achievement.fromJson(map))
           .toList();
+      _firebaseAnalytics.logEvent(
+          name: 'Total Achieve',
+          parameters: {'achievements': _achievements.length});
       return _achievements;
     } else {
       throw Exception('Falló');
@@ -33,6 +37,7 @@ class _AchievementsState extends State<Achievements> {
   @override
   void initState() {
     super.initState();
+    _firebaseAnalytics.setCurrentScreen(screenName: 'Achievements');
     _achievementsFuture = _getAchievements();
   }
 

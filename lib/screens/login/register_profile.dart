@@ -54,7 +54,7 @@ class _RegisterProfileState extends State<RegisterProfile> {
           HttpHeaders.contentTypeHeader: 'application/json',
         }).then((response) {
       print("Luego de request");
-      if (response.statusCode == HttpStatus.ok) {
+      if (response.statusCode == 204) {
         _created = true;
       } else {
         _created = false;

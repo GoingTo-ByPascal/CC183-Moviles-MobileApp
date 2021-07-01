@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:goingto_app/constants/api_path.dart';
 import 'package:goingto_app/models/interactions/review.dart';
@@ -19,6 +20,7 @@ class PlaceReviews extends StatefulWidget {
 
 class _PlaceReviewsState extends State<PlaceReviews> {
   late Future<List> _reviewsFuture;
+  final FirebaseAnalytics _firebaseAnalytics = FirebaseAnalytics();
   int _rating = 0;
 
   final TextEditingController commentController = TextEditingController();
@@ -63,6 +65,7 @@ class _PlaceReviewsState extends State<PlaceReviews> {
   void initState() {
     super.initState();
     _reviewsFuture = _getReviews();
+    _firebaseAnalytics.setCurrentScreen(screenName: 'place/reviews');
   }
 
   @override

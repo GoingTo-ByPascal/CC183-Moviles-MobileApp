@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:goingto_app/constants/api_path.dart';
 import 'package:goingto_app/models/interactions/tip.dart';
@@ -18,6 +19,7 @@ class PlaceTips extends StatefulWidget {
 
 class _PlaceTipsState extends State<PlaceTips> {
   late Future<List> _tipsFuture;
+  final FirebaseAnalytics _firebaseAnalytics = FirebaseAnalytics();
 
   final TextEditingController textController = TextEditingController();
 
